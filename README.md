@@ -14,6 +14,12 @@ Floating macOS-glass **usage panel** for DeepSeek Harness Web: live official
 balance + token usage (today / session / 24 h smooth trend / per-model).
 `Token` 等有歧义名词未做翻译。
 
+## 📸 效果预览
+
+<p align="center">
+  <img src="img/dark.png" alt="深色主题" width="240" />&nbsp;<img src="img/light.png" alt="亮色主题" width="240" />
+</p>
+
 ## ✨ 功能
 
 - 💰 **官方余额**：轮询 `GET /user/balance`，只显示官方字段（当前余额、充值余额）。
