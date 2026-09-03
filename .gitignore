@@ -1,0 +1,17 @@
+# dependencies
+node_modules/
+
+# npm
+*.tgz
+npm-debug.log*
+
+# runtime / local data
+*.log
+.dsh-usage/
+
+# editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
