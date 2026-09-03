@@ -1,12 +1,12 @@
-# dsh-usage-panel bundle patch.
+# dsh-deepseek-usage-panel bundle patch.
 #
 # Inserts this plugin's loader row into the profile layer stack. When the
 # package is installed through the official CLI:
 #
-#   dsh plugin --profile <name> add dsh-usage-panel
+#   dsh plugin --profile <name> add dsh-deepseek-usage-panel
 #
 # the command reconciles `dsh.profile.bundles` and, seeing the
-# `dsh.bundle.patch` declaration in package.json, appends `dsh-usage-panel` to
+# `dsh.bundle.patch` declaration in package.json, appends `dsh-deepseek-usage-panel` to
 # the bundle stack. Profile boot then merges THIS patch — a single `insert` of
 # the plugin row — exactly like the manual cordis.patch.yml mount line used
 # before. No profile-file edits are needed.
@@ -22,4 +22,4 @@
 #
 - insert:
     - id: usage-panel
-      name: 'dsh-usage-panel'
+      name: 'dsh-deepseek-usage-panel'

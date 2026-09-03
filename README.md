@@ -33,14 +33,14 @@ balance + token usage (today / session / 24 h smooth trend / per-model).
 
 ```bash
 # 方式一：在线安装（推荐）
-dsh plugin --profile web add dsh-usage-panel
+dsh plugin --profile web add dsh-deepseek-usage-panel
 
 # 方式二：从源码安装
-dsh plugin --profile web add "link:/你的路径/dsh-usage-panel"
+dsh plugin --profile web add "link:/你的路径/dsh-deepseek-usage-panel"
 ```
 
 装完重启 `dsh web` 并硬刷新浏览器（`Ctrl/Cmd + Shift + R`）。若未自动加入
-bundle，把 `dsh-usage-panel` 追加到 profile `package.json` 的
+bundle，把 `dsh-deepseek-usage-panel` 追加到 profile `package.json` 的
 `dsh.profile.bundles`。
 
 **API Key（余额必需）** —— 在 `~/.dsh/.credentials.yaml` 配置（插件直读，不注入浏览器）：
@@ -57,15 +57,15 @@ refs:
 
 ```bash
 # 方式一：CLI 卸载（移除依赖与 bundles 项）
-dsh plugin --profile web remove dsh-usage-panel
+dsh plugin --profile web remove dsh-deepseek-usage-panel
 
 # 方式二：手动清理
-pnpm --dir C:\Users\Administrator\.dsh\profiles\web remove dsh-usage-panel
-# 并手动把 package.json 的 dsh.profile.bundles 中的 "dsh-usage-panel" 移除
+pnpm --dir C:\Users\Administrator\.dsh\profiles\web remove dsh-deepseek-usage-panel
+# 并手动把 package.json 的 dsh.profile.bundles 中的 "dsh-deepseek-usage-panel" 移除
 ```
 
 重启 `dsh web` 即完全生效。（可选）删除本地数据目录
-`$DSH_HOME/dsh-usage-panel/` 或 `<profile>/.dsh-usage/` 以清理历史用量记录。
+`$DSH_HOME/dsh-deepseek-usage-panel/` 或 `<profile>/.dsh-usage/` 以清理历史用量记录。
 
 ## 🖱️ 使用
 
@@ -84,7 +84,7 @@ pnpm --dir C:\Users\Administrator\.dsh\profiles\web remove dsh-usage-panel
     historyHours: 72         # 历史小时桶保留数
     baseURL: https://api.deepseek.com   # 覆盖接口地址
     apiKeyRef: DEEPSEEK_API_KEY         # 凭据引用名
-    dataDir: null            # 覆盖数据目录（默认 $DSH_HOME/dsh-usage-panel）
+    dataDir: null            # 覆盖数据目录（默认 $DSH_HOME/dsh-deepseek-usage-panel）
 ```
 
 ## 🔒 数据与隐私

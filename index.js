@@ -1,7 +1,7 @@
-// dsh-usage-panel 路 host half.
+// dsh-deepseek-usage-panel 路 host half.
 //
 // A profile "bundle" plugin: loaded by the profile Cordis Loader through the
-// row inserted by cordis.patch.yml ({id: usage-hud, name: dsh-usage-panel}).
+// row inserted by cordis.patch.yml ({id: usage-hud, name: dsh-deepseek-usage-panel}).
 //
 // What this half does:
 //   1. Resolves the DeepSeek API key (credentials/settings) and polls
@@ -18,7 +18,7 @@ import { buildSnapshot } from "./lib/host/snapshot.js";
 import { resolveApiKey } from "./lib/host/key.js";
 import { ensureDataDir, fenceOk, writeRes, migrateLegacyState } from "./lib/host/util.js";
 
-export const name = "dsh-usage-panel";
+export const name = "dsh-deepseek-usage-panel";
 
 // webServer (JSON routes) and timer (ctx.timeout / ctx.interval mixin) are
 // hard dependencies 鈥?Cordis guards property access to undeclared services.
@@ -153,14 +153,14 @@ export function apply(ctx, rawConfig = {}) {
         } catch (err) {
           // Route/timer wiring failed; degrade to no-op instead of breaking boot.
           if (typeof console !== "undefined" && console.error) {
-            console.error("[dsh-usage-panel] host init failed:", err);
+            console.error("[dsh-deepseek-usage-panel] host init failed:", err);
           }
         }
       };
 
       run();
       return cleanup;
-    }, "dsh-usage-panel: host half");
+    }, "dsh-deepseek-usage-panel: host half");
 }
 
 export { resolveApiKey };

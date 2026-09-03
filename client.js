@@ -1,4 +1,4 @@
-// dsh-usage-panel · browser half (client plugin for the DSH web UI).
+// dsh-deepseek-usage-panel · browser half (client plugin for the DSH web UI).
 //
 // Self-registering classic-script bundle consumed by the page's module loader:
 //   window.__ModuleLoader__.load({ id, factory(require) { … } })
@@ -16,7 +16,7 @@
 //   POST /dsh-usage/api/refresh   → force a balance poll, returns Snapshot
 // The API key never leaves the host.
 window.__ModuleLoader__.load({
-  id: "dsh-usage-panel",
+  id: "dsh-deepseek-usage-panel",
   factory: (require) => {
     var module = { exports: {} };
     var exports = module.exports;
@@ -189,7 +189,7 @@ window.__ModuleLoader__.load({
     }
 
     // ------------------------------------------------------------- storage
-    var PREFS_KEY = "dsh-usage-panel:v1";
+    var PREFS_KEY = "dsh-deepseek-usage-panel:v1";
     function numOr(v, d) {
       return typeof v === "number" && isFinite(v) ? v : d;
     }
@@ -828,11 +828,11 @@ window.__ModuleLoader__.load({
       }
 
       useEffect(function () {
-        var styleId = "dsh-usage-panel-style";
+        var styleId = "dsh-deepseek-usage-panel-style";
         if (!document.getElementById(styleId)) {
           var st = document.createElement("style");
           st.id = styleId;
-          st.setAttribute("data-plugin", "dsh-usage-panel");
+          st.setAttribute("data-plugin", "dsh-deepseek-usage-panel");
           st.setAttribute("data-plugin-css", "up");
           st.textContent = UH_CSS;
           document.head.appendChild(st);
@@ -973,7 +973,7 @@ window.__ModuleLoader__.load({
         try {
           slots.inject("shell.overlay", function () {
             var reg = slots.register(
-              { name: "shell.overlay", id: "dsh-usage-panel", order: 100, label: "用量面板" },
+              { name: "shell.overlay", id: "dsh-deepseek-usage-panel", order: 100, label: "用量面板" },
               function OverlayCell() {
                 return h(HudApp, null);
               },
@@ -985,17 +985,17 @@ window.__ModuleLoader__.load({
           });
         } catch (err) {
           if (typeof console !== "undefined" && console.error) {
-            console.error("[dsh-usage-panel] overlay registration failed:", err);
+            console.error("[dsh-deepseek-usage-panel] overlay registration failed:", err);
           }
         }
         return function () {
           if (dispose) dispose();
           dispose = null;
         };
-      }, "dsh-usage-panel: shell.overlay panel");
+      }, "dsh-deepseek-usage-panel: shell.overlay panel");
     }
 
-    exports.name = "dsh-usage-panel";
+    exports.name = "dsh-deepseek-usage-panel";
     exports.inject = inject;
     exports.apply = apply;
 
