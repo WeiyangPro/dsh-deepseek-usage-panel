@@ -36,20 +36,21 @@ window.__ModuleLoader__.load({
       "body[data-ds-dark-theme]{--up-win:rgba(11,11,16,.25);--up-win2:rgba(20,20,28,.34);--up-brd:rgba(255,255,255,.14);--up-brds:rgba(255,255,255,.08);--up-hi:rgba(255,255,255,.16);--up-txt:rgba(255,255,255,.94);--up-dim:rgba(255,255,255,.58);--up-faint:rgba(255,255,255,.4);--up-card:rgba(255,255,255,.055);--up-cardh:rgba(255,255,255,.1);--up-grid:rgba(255,255,255,.09);--up-sh:0 16px 50px rgba(0,0,0,.42),0 2px 10px rgba(0,0,0,.3);--up-redglow:rgba(255,69,58,.32);--up-blur:10px}",
       "body:not([data-ds-dark-theme]){--up-win:rgba(255,255,255,.3);--up-win2:rgba(255,255,255,.42);--up-brd:rgba(0,0,0,.12);--up-brds:rgba(0,0,0,.06);--up-hi:rgba(255,255,255,.9);--up-txt:rgba(18,18,26,.92);--up-dim:rgba(18,18,26,.55);--up-faint:rgba(18,18,26,.38);--up-card:rgba(18,18,26,.045);--up-cardh:rgba(18,18,26,.09);--up-grid:rgba(18,18,26,.08);--up-sh:0 16px 60px rgba(30,30,60,.2),0 2px 10px rgba(30,30,60,.1);--up-redglow:rgba(255,69,58,.24);--up-blur:10px}",
       ".up-hoverable{transition:transform .16s ease,background .16s ease,box-shadow .16s ease}",
-      ".up-pill{display:flex;align-items:center;gap:9px;padding:7px 13px 7px 8px;border-radius:999px;background:var(--up-win);border:1px solid var(--up-brd);box-shadow:var(--up-sh);backdrop-filter:blur(var(--up-blur)) saturate(150%);-webkit-backdrop-filter:blur(var(--up-blur)) saturate(150%);cursor:pointer;user-select:none;white-space:nowrap;touch-action:none;transition:background .18s ease,transform .18s ease,box-shadow .18s ease}",
+      ".up-pill{display:flex;align-items:center;gap:11px;padding:11px 18px 11px 11px;border-radius:999px;background:var(--up-win);border:1px solid var(--up-brd);box-shadow:var(--up-sh);backdrop-filter:blur(var(--up-blur)) saturate(150%);-webkit-backdrop-filter:blur(var(--up-blur)) saturate(150%);cursor:pointer;user-select:none;white-space:nowrap;touch-action:none;transition:background .18s ease,transform .18s ease,box-shadow .18s ease}",
       ".up-pill:hover{background:var(--up-win2);transform:translateY(-1px)}",
       ".up-pill:active{transform:scale(.97)}",
-      ".up-ic{width:24px;height:24px;border-radius:50%;flex:none;display:grid;place-items:center;background:rgba(77,107,254,.14);color:#4d6bfe;box-shadow:inset 0 0 0 1px rgba(77,107,254,.18)}",
-      ".up-ic svg{width:15px;height:15px;display:block}",
+      ".up-ic{width:28px;height:28px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--up-accent-soft,rgba(77,107,254,.14));color:var(--up-accent,#4d6bfe);box-shadow:inset 0 0 0 1px var(--up-accent-line,rgba(77,107,254,.2))}",
+      ".up-ic svg{width:17px;height:17px;display:block}",
       ".up-cols{display:flex;align-items:baseline;gap:11px}",
       ".up-col{display:flex;flex-direction:column;gap:0}",
       ".up-col+.up-col{border-left:1px solid var(--up-brds);padding-left:11px}",
-      ".up-k{font-size:9.5px;letter-spacing:.06em;color:var(--up-faint)}",
-      ".up-v{font-size:12.5px;font-weight:650;font-variant-numeric:tabular-nums;line-height:1.35;color:var(--up-txt)}",
-      ".up-dot{width:7px;height:7px;border-radius:50%;flex:none;transition:background .2s ease,box-shadow .2s ease}",
-      ".up-dot.ok{background:#30d158;box-shadow:0 0 0 3px rgba(48,209,88,.18)}",
-      ".up-dot.bad{background:#ff453a;box-shadow:0 0 0 3px var(--up-redglow)}",
-      ".up-dot.unknown{background:#ffd60a;box-shadow:0 0 0 3px rgba(255,214,10,.16)}",
+      ".up-k{font-size:10px;letter-spacing:.06em;color:var(--up-faint)}",
+      ".up-v{font-size:13.5px;font-weight:650;font-variant-numeric:tabular-nums;line-height:1.4;color:var(--up-txt)}",
+      ".up-dot{width:10px;height:10px;border-radius:50%;flex:none;transition:background .2s ease,box-shadow .2s ease}",
+      ".up-dot.ok{background:#30d158;box-shadow:0 0 0 4px rgba(48,209,88,.18)}",
+      ".up-dot.warn{background:#ffd60a;box-shadow:0 0 0 4px rgba(255,214,10,.16)}",
+      ".up-dot.bad{background:#ff453a;box-shadow:0 0 0 4px var(--up-redglow)}",
+      ".up-dot.unknown{background:#ffd60a;box-shadow:0 0 0 4px rgba(255,214,10,.16)}",
       ".up-win{width:468px;max-width:calc(100vw - 20px);border-radius:14px;overflow:hidden;background:var(--up-win);border:1px solid var(--up-brd);box-shadow:var(--up-sh);backdrop-filter:blur(var(--up-blur)) saturate(160%);-webkit-backdrop-filter:blur(var(--up-blur)) saturate(160%);display:flex;flex-direction:column;color:var(--up-txt);position:relative;animation:up-pop .2s cubic-bezier(.2,.9,.3,1.15);transform-origin:bottom right}",
       "@keyframes up-pop{from{opacity:0;transform:scale(.94) translateY(8px)}}",
       ".up-win.closing{animation:up-out .18s ease forwards}",
@@ -97,8 +98,13 @@ window.__ModuleLoader__.load({
       ".up-cwrap{position:relative}",
       ".up-tip{position:absolute;top:0;left:0;transform:translateX(-50%);pointer-events:none;background:rgba(22,22,32,.9);color:#fff;border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:6px 9px;font-size:10.5px;line-height:1.5;font-variant-numeric:tabular-nums;box-shadow:0 8px 24px rgba(0,0,0,.3);white-space:nowrap;z-index:3}",
       ".up-models{display:flex;flex-direction:column;gap:8px}",
-      ".up-mrow{display:grid;grid-template-columns:130px 1fr 74px;align-items:center;gap:10px;border-radius:8px;padding:2px 4px;transition:background .15s ease}",
+      ".up-mrow{display:grid;grid-template-columns:26px 118px 1fr 70px;align-items:center;gap:10px;border-radius:8px;padding:2px 4px;transition:background .15s ease}",
+      ".up-rank{display:flex;align-items:center;justify-content:center;min-width:0}",
+      ".up-rank svg{width:20px;height:20px;display:block}",
+      ".up-rank-num{font-size:12.5px;font-weight:700;color:var(--up-dim);width:20px;text-align:center;font-variant-numeric:tabular-nums}",
       ".up-mrow:hover{background:var(--up-cardh)}",
+      ".up-mrow.open{background:var(--up-cardh)}",
+      ".up-trend-open{margin:2px 0 6px;padding:8px 6px 0;border-top:1px dashed var(--up-brds)}",
       ".up-mname{font-size:11.5px;color:var(--up-txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}",
       ".up-mname small{display:block;color:var(--up-faint);font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}",
       ".up-mbar{height:11px;border-radius:6px;background:var(--up-grid);overflow:hidden;display:flex}",
@@ -109,6 +115,39 @@ window.__ModuleLoader__.load({
       ".up-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 14px;border-top:1px solid var(--up-brds)}",
       ".up-foot a{color:var(--up-dim);font-size:10.5px;text-decoration:none;display:inline-flex;align-items:center;gap:4px;transition:color .15s ease}",
       ".up-foot a:hover{color:#4d6bfe}",
+      // ---------- settings / toggles / theme ----------
+      ".up-settings{width:300px;max-width:calc(100vw - 20px);border-radius:14px;overflow:hidden;background:var(--up-win);border:1px solid var(--up-brd);box-shadow:var(--up-sh);backdrop-filter:blur(var(--up-blur)) saturate(160%);-webkit-backdrop-filter:blur(var(--up-blur)) saturate(160%);display:flex;flex-direction:column;color:var(--up-txt);position:relative;animation:up-pop .2s cubic-bezier(.2,.9,.3,1.15);transform-origin:bottom right}",
+      ".up-settings.closing{animation:up-out .18s ease forwards}",
+      ".up-set-body{padding:4px 14px 14px;display:flex;flex-direction:column;gap:10px;overflow:auto;max-height:min(520px,calc(100vh - 120px))}",
+      ".up-row{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:30px}",
+      ".up-row .up-lb{font-size:12px;color:var(--up-txt);line-height:1.4}",
+      ".up-row .up-lb small{display:block;color:var(--up-faint);font-size:9.5px}",
+      ".up-sw{width:34px;height:20px;border-radius:999px;border:1px solid var(--up-brd);background:var(--up-grid);position:relative;flex:none;cursor:pointer;transition:background .18s ease,border-color .18s ease}",
+      ".up-sw::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--up-txt);opacity:.85;transition:transform .18s ease}",
+      ".up-sw.on{background:var(--up-accent,#4d6bfe);border-color:transparent}",
+      ".up-sw.on::after{transform:translateX(14px);background:#fff}",
+      ".up-num{width:86px;background:var(--up-card);border:1px solid var(--up-brds);color:var(--up-txt);border-radius:8px;padding:5px 8px;font-size:12px;font-family:inherit;text-align:right}",
+      ".up-swatches{display:flex;gap:8px}",
+      ".up-swatch{width:22px;height:22px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:transform .14s ease,border-color .14s ease}",
+      ".up-swatch:hover{transform:scale(1.12)}",
+      ".up-swatch.on{border-color:var(--up-txt)}",
+      ".up-seg{display:flex;background:var(--up-card);border:1px solid var(--up-brds);border-radius:8px;overflow:hidden}",
+      ".up-seg button{border:0;background:transparent;color:var(--up-dim);padding:5px 9px;font-size:11px;cursor:pointer;font-family:inherit;transition:background .15s ease,color .15s ease}",
+      ".up-seg button.on{background:var(--up-accent,#4d6bfe);color:#fff}",
+      ".up-reset{width:100%;margin-top:2px;border:1px solid var(--up-brds);background:transparent;color:var(--up-dim);border-radius:9px;padding:7px;font-size:12px;cursor:pointer;font-family:inherit;transition:background .15s ease,color .15s ease}",
+      ".up-reset:hover{background:var(--up-cardh);color:var(--up-txt)}",
+      // ---------- minimal orb / alarm / turn flash ----------
+      ".up-orb{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--up-win);border:1px solid var(--up-brd);box-shadow:var(--up-sh);backdrop-filter:blur(var(--up-blur)) saturate(150%);-webkit-backdrop-filter:blur(var(--up-blur)) saturate(150%);cursor:pointer;user-select:none;touch-action:none;transition:background .18s ease,transform .18s ease,box-shadow .18s ease;color:var(--up-accent,#4d6bfe)}",
+      ".up-orb:hover{background:var(--up-win2)}",
+      ".up-orb:active{transform:scale(.94)}",
+      ".up-orb svg{width:28px;height:28px;display:block}",
+      ".up-dot.alarm{background:#ff453a;box-shadow:0 0 0 3px var(--up-redglow);animation:up-alarm 1.1s ease-in-out infinite}.up-pill.grow{transform-origin:100% 100%;animation:up-grow .24s cubic-bezier(.2,.9,.3,1.1)}.up-pill.shrink{transform-origin:100% 100%;animation:up-shrink .16s ease forwards}@keyframes up-grow{from{opacity:0;transform:scale(.42) translate(6px,6px)}to{opacity:1;transform:scale(1) translate(0,0)}}@keyframes up-shrink{to{opacity:0;transform:scale(.5)}}",
+      "@keyframes up-alarm{0%,100%{box-shadow:0 0 0 3px var(--up-redglow)}50%{box-shadow:0 0 0 7px rgba(255,69,58,.15)}}",
+      ".up-orbwrap{position:relative;display:inline-flex}",
+      ".up-orb-dot{position:absolute;top:0;right:0;z-index:2;width:14px;height:14px;border-radius:50%;background:#ff453a;border:2px solid var(--up-win);transform:translate(-1px,1px);box-shadow:0 0 0 2px var(--up-redglow);animation:up-alarm 1.1s ease-in-out infinite}",
+      "@keyframes up-dot-pulse{0%,100%{opacity:1}50%{opacity:.5}}",
+      ".up-flash{position:absolute;right:0;bottom:calc(100% + 10px);white-space:nowrap;background:var(--up-win2);border:1px solid var(--up-brd);color:var(--up-txt);font-size:11px;font-variant-numeric:tabular-nums;padding:5px 10px;border-radius:999px;box-shadow:var(--up-sh);backdrop-filter:blur(var(--up-blur));-webkit-backdrop-filter:blur(var(--up-blur));animation:up-flash .25s ease}",
+      "@keyframes up-flash{from{opacity:0;transform:translateY(4px)}}",
     ].join("");
 
     // ------------------------------------------------------------ formatting
@@ -149,12 +188,6 @@ window.__ModuleLoader__.load({
       if (s < 3600) return Math.round(s / 60) + " 分钟前";
       return Math.round(s / 3600) + " 小时前";
     }
-    function dotClassFor(snap) {
-      var b = snap && snap.balance;
-      if (!b || b.configured === false) return "unknown";
-      if (b.error) return "bad";
-      return b.isAvailable === false ? "bad" : "ok";
-    }
     function modelLabel(m) {
       if (!m) return "unknown";
       return m;
@@ -189,19 +222,44 @@ window.__ModuleLoader__.load({
     }
 
     // ------------------------------------------------------------- storage
-    var PREFS_KEY = "dsh-deepseek-usage-panel:v1";
+    var PREFS_KEY = "dsh-deepseek-usage-panel:v2";
+    var PREFS_DEFAULTS = { r: 24, b: 24, alarm: false, alarmThreshold: 5, minimal: false, turnFlash: true, tint: "auto", glass: "default" };
+    // 毛玻璃背景色：自动跟随主题，或指定色调（深/亮两组 RGB）
+    var TINTS = {
+      auto: { dark: [11, 11, 16], light: [255, 255, 255] },
+      graphite: { dark: [18, 18, 23], light: [248, 248, 250] },
+      midnight: { dark: [9, 13, 30], light: [236, 240, 255] },
+      warm: { dark: [30, 20, 12], light: [255, 248, 240] },
+    };
+    // 玻璃质感 = 模糊/折射档位（空气感→可读性），背景不透明度随之变化
+    var GLASS = {
+      airy: { alphaD: 0.16, alphaL: 0.22, blur: 8 },
+      default: { alphaD: 0.25, alphaL: 0.3, blur: 10 },
+      readable: { alphaD: 0.62, alphaL: 0.74, blur: 16 },
+    };
     function numOr(v, d) {
       return typeof v === "number" && isFinite(v) ? v : d;
     }
+    function boolOr(v, d) {
+      return typeof v === "boolean" ? v : d;
+    }
     function loadPrefs() {
-      var def = { r: 24, b: 24 };
       try {
         var raw = window.localStorage.getItem(PREFS_KEY);
-        if (!raw) return def;
-        var p = JSON.parse(raw);
-        return { r: numOr(p.r, def.r), b: numOr(p.b, def.b) };
+        var p = raw ? JSON.parse(raw) : {};
+        var def = PREFS_DEFAULTS;
+        return {
+          r: numOr(p.r, def.r),
+          b: numOr(p.b, def.b),
+          alarm: boolOr(p.alarm, def.alarm),
+          alarmThreshold: numOr(p.alarmThreshold, def.alarmThreshold),
+          minimal: boolOr(p.minimal, def.minimal),
+          turnFlash: boolOr(p.turnFlash, def.turnFlash),
+          tint: TINTS[p.tint] ? p.tint : def.tint,
+          glass: (p.glass === "solid" ? "readable" : GLASS[p.glass] ? p.glass : def.glass),
+        };
       } catch (e) {
-        return def;
+        return { ...PREFS_DEFAULTS };
       }
     }
     function savePrefs(p) {
@@ -210,6 +268,13 @@ window.__ModuleLoader__.load({
       } catch (e) {
         /* private mode etc. */
       }
+    }
+    function hexToRgb(hex) {
+      var h = hex.replace("#", "");
+      return parseInt(h.slice(0, 2), 16) + "," + parseInt(h.slice(2, 4), 16) + "," + parseInt(h.slice(4, 6), 16);
+    }
+    function isDarkTheme() {
+      return typeof document !== "undefined" && !!document.body && document.body.hasAttribute("data-ds-dark-theme");
     }
 
     // ------------------------------------------------------- svg / curves
@@ -347,25 +412,20 @@ window.__ModuleLoader__.load({
       }
 
       if (n === 1 && any) {
-        var colW = Math.min(64, Math.max(26, iw * 0.5));
+        // 只有一个时段：画“平滑尖峰”曲线（左右两侧回到基线），而不是柱形
         var cx = width / 2;
-        var inH = (input[0] / maxIn) * ih;
-        var outH = (output[0] / maxOut) * ih;
-        var segs = [];
-        if (output[0] > 0) {
-          segs.push(h("rect", { key: "out", x: cx - colW / 2, y: baselineY - inH - outH, width: colW, height: outH, fill: CHART_COLORS.output, rx: Math.min(4, colW / 2), opacity: 0.85 }));
-        }
-        if (input[0] > 0) {
-          segs.push(h("rect", { key: "in", x: cx - colW / 2, y: baselineY - inH, width: colW, height: inH, fill: CHART_COLORS.input, rx: Math.min(4, colW / 2), opacity: 0.85 }));
-        }
+        var b0 = baselineY;
+        var inPtsS = [[pad.l, b0], [cx, yOfIn(input[0])], [width - pad.r, b0]];
+        var outPtsS = [[pad.l, b0], [cx, yOfOut(output[0])], [width - pad.r, b0]];
         return h(
           "div",
-          { className: "up-cwrap", onMouseLeave: function () { hover[1](-1); } },
-          tip,
+          { className: "up-cwrap" },
           h("svg", { width: width, height: height, viewBox: "0 0 " + width + " " + height, style: { display: "block", width: "100%" } },
             defs, gridLines,
-            h("line", { x1: cx, y1: pad.t, x2: cx, y2: baselineY, stroke: "var(--up-grid)" }),
-            segs,
+            h("path", { d: areaUnder(inPtsS, b0), fill: "url(#up-g-in)" }),
+            h("path", { d: areaUnder(outPtsS, b0), fill: "url(#up-g-out)" }),
+            h("path", { d: smoothPath(inPtsS), fill: "none", stroke: CHART_COLORS.input, strokeWidth: 1.6, strokeLinejoin: "round" }),
+            h("path", { d: smoothPath(outPtsS), fill: "none", stroke: CHART_COLORS.output, strokeWidth: 1.6, strokeLinejoin: "round" }),
             h("text", { x: cx, y: height - 2, fontSize: 9, fill: "var(--up-faint)", textAnchor: "middle" }, fmtHour(data[0].t) + " · " + fmtTokens(input[0] + output[0])),
           ),
         );
@@ -408,22 +468,32 @@ window.__ModuleLoader__.load({
     }
 
     // ------------------------------------------------------------ stat tiles
-    function balanceTone(b) {
-      if (!b) return { cls: "off", label: "—" };
-      if (b.configured === false) return { cls: "off", label: "未配置" };
-      if (b.error) return { cls: "bad", label: "更新失败" };
+    // 统一的余额判断：开启低额提醒 → 一律按用户阈值（≤阈值即红/低）；
+    // 未开启 → 旧版红绿灯（耗尽红 / 偏低黄 / 正常绿）。
+    // 悬浮球红灯（orbRed）额外受“系统默认偏低线”约束：无论是否开启提醒，
+    // 只要触及系统默认额度，悬浮球右上角也亮红灯。
+    function balanceSignal(b, prefs) {
+      if (!b) return { cls: "off", dot: "unknown", orbRed: false, label: "—" };
+      if (b.configured === false) return { cls: "off", dot: "unknown", orbRed: false, label: "未配置" };
+      if (b.error) return { cls: "bad", dot: "bad", orbRed: false, label: "更新失败" };
       var num = parseFloat(b.totalBalance);
-      if (!isFinite(num)) return { cls: "off", label: "…" };
-      var low = b.currency === "CNY" ? 10 : b.currency === "USD" ? 1.5 : 5;
-      if (num <= 0) return { cls: "bad", label: "已耗尽" };
-      if (num < low) return { cls: "warn", label: "偏低" };
-      return { cls: "ok", label: "正常" };
+      if (!isFinite(num)) return { cls: "off", dot: "unknown", orbRed: false, label: "…" };
+      var on = !!(prefs && prefs.alarm);
+      var sysLow = 2;
+      if (on) {
+        var thr = Number(prefs.alarmThreshold || 0);
+        var low = num <= thr || num <= 0;
+        return { cls: low ? "bad" : "ok", dot: low ? "bad" : "ok", orbRed: low, label: low ? "低于阈值" : "正常" };
+      }
+      var cls = num <= 0 ? "bad" : num < sysLow ? "warn" : "ok";
+      var dot = num <= 0 ? "bad" : num <= sysLow ? "warn" : "ok";
+      return { cls: cls, dot: dot, orbRed: num <= sysLow || num <= 0, label: num <= 0 ? "已耗尽" : num < sysLow ? "偏低" : "正常" };
     }
 
     function StatTiles(props) {
       var s = props.snap;
       var b = s && s.balance;
-      var tone = balanceTone(b);
+      var tone = balanceSignal(b, props.prefs);
       var dayTotal = s ? (s.day ? s.day.inputTokens + s.day.outputTokens + (s.day.cacheReadTokens || 0) : 0) : 0;
       var last = s && s.lastSession;
       var sessTotal = last ? last.inputTokens + last.outputTokens + (last.cacheReadTokens || 0) : 0;
@@ -461,7 +531,7 @@ window.__ModuleLoader__.load({
       if (!b) {
         return h("div", { className: "up-card" }, h("div", { className: "up-empty" }, "等待数据…"));
       }
-      var tone = balanceTone(b);
+      var tone = balanceSignal(b, props.prefs);
       // Only official /user/balance fields are shown; no locally estimated spend.
       var sub;
       if (b.configured === false || (b.error && b.error.code === "no-key")) {
@@ -498,7 +568,7 @@ window.__ModuleLoader__.load({
           { className: "up-balmain" },
           h("span", { className: "up-balamt up-mono" }, fmtMoney(b.totalBalance, cur)),
           h("span", { className: "up-balcur" }, cur),
-          h("span", { className: "up-dot " + tone.cls, style: { marginLeft: "auto", alignSelf: "center" } }),
+          h("span", { className: "up-dot " + tone.dot, style: { marginLeft: "auto", alignSelf: "center" } }),
         ),
         sub,
         b.toppedUpBalance != null
@@ -522,20 +592,34 @@ window.__ModuleLoader__.load({
         total += list[i].inputTokens + list[i].outputTokens + (list[i].cacheReadTokens || 0);
       }
       total = Math.max(1, total);
-      return h(
-        "div",
-        { className: "up-models" },
-        list.map(function (m, i) {
-          var color = ["#4d6bfe", "#ff9f0a", "#bf5af2", "#30d158", "#ff453a", "#5ac8fa"][i % 6];
-          var mt = m.inputTokens + m.outputTokens + (m.cacheReadTokens || 0);
-          var wIn = ((m.inputTokens + (m.cacheReadTokens || 0)) / total) * 100;
-          var wOut = (m.outputTokens / total) * 100;
-          return h(
+      var onToggle = props.onToggle;
+      var expandedModel = props.expandedModel;
+      var rowsOf = props.rowsOf || function () { return []; };
+      var trendWidth = props.trendWidth || 320;
+      var out = [];
+      for (var i2 = 0; i2 < list.length; i2++) {
+        var m = list[i2];
+        var color = ["#4d6bfe", "#ff9f0a", "#bf5af2", "#30d158", "#ff453a", "#5ac8fa"][i2 % 6];
+        var mt = m.inputTokens + m.outputTokens + (m.cacheReadTokens || 0);
+        var wIn = ((m.inputTokens + (m.cacheReadTokens || 0)) / total) * 100;
+        var wOut = (m.outputTokens / total) * 100;
+        var expandable = typeof onToggle === "function";
+        var open = expandedModel === m.model;
+        out.push(
+          h(
             "div",
-            { key: m.model || i, className: "up-mrow" },
+            { key: m.model || i2, className: "up-mrow" + (open ? " open" : "") },
+            rankBadge(i2 + 1),
             h(
               "div",
-              { className: "up-mname", title: m.model },
+              {
+                className: "up-mname",
+                title: m.model + (expandable ? (open ? "（点击收起）" : "（点击查看近 24 小时曲线）") : ""),
+                style: expandable ? { cursor: "pointer" } : null,
+                onClick: expandable ? (function (mm) {
+                  return function (e) { e.stopPropagation(); onToggle(mm); };
+                })(m.model) : undefined,
+              },
               modelLabel(m.model),
               h("small", null, fmtTokens(m.inputTokens + (m.cacheReadTokens || 0)) + " 入 · " + fmtTokens(m.outputTokens) + " 出"),
             ),
@@ -551,9 +635,20 @@ window.__ModuleLoader__.load({
               fmtTokens(mt),
               h("small", null, ((mt / total) * 100).toFixed(1) + "% 今日"),
             ),
+          ),
+        );
+        if (open) {
+          var rows = rowsOf(m.model);
+          out.push(
+            h("div", { key: "trend-" + m.model, className: "up-trend-open" },
+              rows && rows.length
+                ? h(TrendCurve, { data: rows, width: trendWidth })
+                : h("div", { className: "up-empty" }, "该模型近 24 小时暂无数据"),
+            ),
           );
-        }),
-      );
+        }
+      }
+      return h("div", { className: "up-models" }, out);
     }
 
     // -------------------------------------------------------------- icons
@@ -576,6 +671,21 @@ window.__ModuleLoader__.load({
       );
     }
 
+    // 前三名奖牌（1 金 / 2 银 / 3 铜），内容为原始 <path> 片段
+    var MEDAL_HTML = [
+      '<path d="M303.042 402.944L511.81 611.712l389.248-389.376a42.88 42.88 0 0 0 12.8-31.424l-4.096-148.736A42.944 42.944 0 0 0 866.882 0.384H722.946a43.008 43.008 0 0 0-30.336 12.8z m0 0" fill="#D32F2F"/><path d="M720.962 402.944L512.194 611.712 122.946 222.464a42.496 42.496 0 0 1-12.8-31.424l4.096-148.736A42.944 42.944 0 0 1 157.058 0.512h143.808a42.944 42.944 0 0 1 30.336 12.8z m0 0" fill="#F44336"/><path d="M157.314 667.84a354.944 354.944 0 1 0 355.008-354.88 355.008 355.008 0 0 0-355.008 354.88z m0 0" fill="#FFCA28"/><path d="M651.394 544.448l102.4 137.216c0-4.608 0.384-9.28 0.384-13.888A242.048 242.048 0 1 0 455.81 903.232L353.794 766.848z m0 0" fill="#FFA000"/><path d="M753.986 681.664a242.24 242.24 0 0 1-297.984 221.44l88.256 118.208a355.136 355.136 0 0 0 297.728-221.824z m0 0" fill="#FFB300"/><path d="M753.986 681.664l-102.4-137.216-297.472 222.4L456.13 903.232a242.24 242.24 0 0 0 297.984-221.568z m0 0" fill="#FF8F00"/><path d="M326.722 667.84a185.6 185.6 0 1 0 185.6-185.6 185.6 185.6 0 0 0-185.6 185.6z m0 0" fill="#FFCA28"/><path d="M551.17 807.168h-52.672v-198.4a181.632 181.632 0 0 1-68.032 39.936v-47.808a152.384 152.384 0 0 0 44.8-25.6 97.28 97.28 0 0 0 33.216-43.968h42.688z" fill="#E8233A"/>',
+      '<path d="M303.042 402.944L511.81 611.712l389.248-389.376a42.88 42.88 0 0 0 12.8-31.424l-4.096-148.736A42.944 42.944 0 0 0 866.882 0.384H722.946a43.008 43.008 0 0 0-30.336 12.8z m0 0" fill="#D32F2F"/><path d="M720.962 402.944L512.194 611.712 122.946 222.464a42.496 42.496 0 0 1-12.8-31.424l4.096-148.736A42.944 42.944 0 0 1 157.058 0.512h143.808a42.944 42.944 0 0 1 30.336 12.8z m0 0" fill="#F44336"/><path d="M157.314 667.84a354.944 354.944 0 1 0 355.008-354.88 355.008 355.008 0 0 0-355.008 354.88z m0 0" fill="#BEBEBE"/><path d="M651.394 544.448l102.4 137.216c0-4.608 0.384-9.28 0.384-13.888A242.048 242.048 0 1 0 455.81 903.232L353.794 766.848z m0 0" fill="#999999"/><path d="M753.986 681.664a242.24 242.24 0 0 1-297.984 221.44l88.256 118.208a355.136 355.136 0 0 0 297.728-221.824z m0 0" fill="#8E8E8E"/><path d="M753.986 681.664l-102.4-137.216-297.472 222.4L456.13 903.232a242.24 242.24 0 0 0 297.984-221.568z m0 0" fill="#8E8E8E"/><path d="M326.722 667.84a185.6 185.6 0 1 0 185.6-185.6 185.6 185.6 0 0 0-185.6 185.6z m0 0" fill="#BEBEBE"/><path d="M602.306 751.872v48.96H417.602a127.168 127.168 0 0 1 17.984-52.608 350.016 350.016 0 0 1 59.264-65.92 372.672 372.672 0 0 0 43.712-44.8 57.984 57.984 0 0 0 10.88-32 36.672 36.672 0 0 0-9.472-27.072 35.328 35.328 0 0 0-26.176-9.92 35.072 35.072 0 0 0-26.24 9.92 51.2 51.2 0 0 0-11.136 33.024l-52.48-5.248a86.08 86.08 0 0 1 29.44-62.464 98.816 98.816 0 0 1 61.44-18.88 89.6 89.6 0 0 1 64 21.888 71.936 71.936 0 0 1 23.232 54.592 94.976 94.976 0 0 1-6.4 35.328 143.744 143.744 0 0 1-21.12 35.136 337.536 337.536 0 0 1-34.496 35.072q-25.216 22.912-31.616 30.4a90.944 90.944 0 0 0-10.752 14.656z" fill="#FFFFFF"/>',
+      '<path d="M303.01 402.944l208.768 208.768 389.248-389.376a42.88 42.88 0 0 0 12.8-31.424L909.73 42.176A42.944 42.944 0 0 0 866.85 0.384H722.914a43.008 43.008 0 0 0-30.336 12.8z m0 0" fill="#D32F2F"/><path d="M720.994 402.944L512.226 611.712 122.978 222.464a42.496 42.496 0 0 1-12.8-31.424l4.096-148.736A42.944 42.944 0 0 1 157.09 0.512h143.808a42.944 42.944 0 0 1 30.336 12.8z m0 0" fill="#F44336"/><path d="M157.346 667.84a354.944 354.944 0 1 0 355.008-354.88 355.008 355.008 0 0 0-355.008 354.88z m0 0" fill="#C5AE99"/><path d="M651.426 544.448l102.4 137.216c0-4.608 0.384-9.28 0.384-13.888a242.048 242.048 0 1 0-298.368 235.456L353.826 766.848z m0 0" fill="#C4A080"/><path d="M754.018 681.664a242.24 242.24 0 0 1-297.984 221.44l88.256 118.208a355.136 355.136 0 0 0 297.728-221.824z m0 0" fill="#B58B66"/><path d="M753.954 681.728l-102.4-137.216-297.472 222.4 102.016 136.384a242.24 242.24 0 0 0 297.984-221.568z m0 0" fill="#B58B66"/><path d="M326.754 667.84a185.6 185.6 0 1 0 185.6-185.6 185.6 185.6 0 0 0-185.6 185.6z m0 0" fill="#C5AE99"/><path d="M417.634 734.208l51.2-6.4a48.256 48.256 0 0 0 13.12 29.824 35.904 35.904 0 0 0 25.6 10.304 35.52 35.52 0 0 0 27.584-11.968 48 48 0 0 0 11.136-33.344 44.8 44.8 0 0 0-10.688-31.68 34.048 34.048 0 0 0-26.048-11.776 91.904 91.904 0 0 0-24.192 3.968l5.824-42.944a46.208 46.208 0 0 0 32.64-9.28 33.024 33.024 0 0 0 11.264-26.176 29.888 29.888 0 0 0-8.256-22.144 29.632 29.632 0 0 0-21.952-8.256 32 32 0 0 0-23.04 9.344 44.032 44.032 0 0 0-11.648 27.392l-48.576-8.256a108.8 108.8 0 0 1 15.296-39.872 68.992 68.992 0 0 1 28.288-23.232 96 96 0 0 1 40.96-8.512 81.728 81.728 0 0 1 62.272 24.768 64.576 64.576 0 0 1 19.2 45.76 64.768 64.768 0 0 1-39.552 57.6 64 64 0 0 1 37.76 22.656 65.856 65.856 0 0 1 14.144 42.56 82.56 82.56 0 0 1-25.984 61.824 91.072 91.072 0 0 1-65.792 25.6 90.624 90.624 0 0 1-62.208-21.568 84.352 84.352 0 0 1-28.352-56.192z" fill="#EEEEEE"/>',
+    ];
+    function rankBadge(rank) {
+      if (rank <= 3) {
+        return h("span", { className: "up-rank" },
+          h("svg", { viewBox: "0 0 1024 1024", width: 20, height: 20, style: { display: "block" }, dangerouslySetInnerHTML: { __html: MEDAL_HTML[rank - 1] } }));
+      }
+      return h("span", { className: "up-rank" }, h("span", { className: "up-rank-num" }, String(rank)));
+    }
+
+
     // -------------------------------------------------------------- pill
     function Pill(props) {
       var s = props.snap;
@@ -586,16 +696,17 @@ window.__ModuleLoader__.load({
       return h(
         "div",
         {
-          className: "up-pill",
+          className: "up-pill" + (props.cls ? " " + props.cls : ""),
           title: "DeepSeek 用量面板 — 点击展开",
-          ref: props.dragRef,
+          ref: props.pillRef || props.dragRef,
           onPointerDown: props.onPointerDown,
           onPointerMove: props.onPointerMove,
           onPointerUp: props.onPointerUp,
           onPointerCancel: props.onPointerUp,
           onClick: props.onClick,
+          onContextMenu: props.onContextMenu,
         },
-        h("span", { className: "up-ic" }, logoMark("#4d6bfe")),
+        h("span", { className: "up-ic" }, logoMark(props.accent || "#4d6bfe")),
         h(
           "span",
           { className: "up-cols" },
@@ -620,6 +731,16 @@ window.__ModuleLoader__.load({
     function Window(props) {
       var s = props.snap;
       var ref = useRef(null);
+      var expState = useState(null);
+      var expandedModel = expState[0];
+      var rowsOf = function (model) {
+        var list = (s && s.historyByModel) || [];
+        for (var i = 0; i < list.length; i++) {
+          if (list[i].model === model) return list[i].rows || [];
+        }
+        return [];
+      };
+      var trendWidth = (props.compact ? 352 : 440) - 18;
       return h(
         "div",
         {
@@ -664,8 +785,8 @@ window.__ModuleLoader__.load({
         h(
           "div",
           { className: "up-body" },
-          h(StatTiles, { snap: s }),
-          h(BalanceCard, { snap: s }),
+          h(StatTiles, { snap: s, prefs: props.prefs }),
+          h(BalanceCard, { snap: s, prefs: props.prefs }),
           h("div", { className: "up-card" },
             h("div", { className: "up-card-h" }, h("span", { className: "up-card-t" }, "Tokens · 近 24 小时")),
             s && s.history && s.history.length > 0
@@ -675,7 +796,15 @@ window.__ModuleLoader__.load({
           ),
           h("div", { className: "up-card" },
             h("div", { className: "up-card-h" }, h("span", { className: "up-card-t" }, "按模型 · 今日")),
-            h(ModelRows, { list: s && s.byModel ? s.byModel : [] }),
+            h(ModelRows, {
+              list: s && s.byModel ? s.byModel : [],
+              trendWidth: trendWidth,
+              expandedModel: expandedModel,
+              rowsOf: rowsOf,
+              onToggle: function (model) {
+                expState[1](model === expandedModel ? null : model);
+              },
+            }),
           ),
         ),
         h(
@@ -696,137 +825,255 @@ window.__ModuleLoader__.load({
     }
 
     // -------------------------------------------------------------- app
+    // ============================================================ settings
+    function Row(props) {
+      return h("div", { className: "up-row" },
+        h("span", { className: "up-lb" }, props.label, props.hint ? h("small", null, props.hint) : null),
+        props.children);
+    }
+    function Switch({ on, onChange }) {
+      return h("span", { className: "up-sw" + (on ? " on" : ""), onClick: function () { onChange(!on); } });
+    }
+
+    function SettingsPanel(props) {
+      var prefs = props.prefs;
+      var tintId = prefs.tint;
+      var set = props.onChange;
+      var glassId = prefs.glass;
+      return h(
+        "div",
+        { className: "up-settings" + (props.closing ? " closing" : "") },
+        h("div", {
+          className: "up-titlebar",
+          onPointerDown: props.onTitleDown,
+          onPointerMove: props.onTitleMove,
+          onPointerUp: props.onTitleUp,
+          onPointerCancel: props.onTitleUp,
+          title: "拖动可移动",
+        },
+          h("div", { className: "up-lights" },
+            h("span", { className: "up-light close", title: "收起", onClick: props.onClose }),
+            h("span", { className: "up-light min", title: "收起", onClick: props.onClose }),
+            h("span", { className: "up-light zoom", title: "收起", onClick: props.onClose })),
+          h("span", { className: "up-logo" }, logoWord("var(--up-txt)")),
+        ),
+        h("div", { className: "up-set-body" },
+          h("div", { className: "up-card-t", style: { paddingBottom: 2 } }, "提醒"),
+          h(Row, {
+            label: "余额低额提醒",
+            hint: "余额低于阈值时胶囊变红提示（可开启系统通知）",
+            children: h(Switch, { on: prefs.alarm, onChange: function (v) { set("alarm", v); } }),
+          }),
+          prefs.alarm
+            ? h(Row, {
+                label: "触发阈值",
+                hint: "低于该金额触发（按余额货币）",
+                children: h("input", {
+                  className: "up-num",
+                  type: "number",
+                  min: 0,
+                  step: 1,
+                  value: prefs.alarmThreshold,
+                  onChange: function (e) { set("alarmThreshold", Math.max(0, Number(e.target.value) || 0)); },
+                }),
+              })
+            : null,
+          h("div", { className: "up-card-t", style: { paddingBottom: 2, paddingTop: 4 } }, "界面"),
+          h(Row, {
+            label: "悬浮球模式（极简）",
+            hint: "平时只显示小球，悬停时展开胶囊",
+            children: h(Switch, { on: prefs.minimal, onChange: function (v) { set("minimal", v); } }),
+          }),
+          h(Row, {
+            label: "回合用量提示",
+            hint: "每次模型回合结束，在胶囊旁闪现“本回合 +X tokens”",
+            children: h(Switch, { on: prefs.turnFlash, onChange: function (v) { set("turnFlash", v); } }),
+          }),
+          h(Row, {
+            label: "玻璃背景色",
+            hint: "毛玻璃底色（深色/亮色各自生效）",
+            children: h("div", { className: "up-swatches" },
+              [["auto", "自动", [11, 11, 16]], ["graphite", "石墨", [44, 46, 54]], ["midnight", "极夜", [64, 82, 150]], ["warm", "暖阳", [214, 148, 96]]].map(function (opt) {
+                return h("span", {
+                  key: opt[0],
+                  className: "up-swatch" + (tintId === opt[0] ? " on" : ""),
+                  style: { background: "rgb(" + opt[2][0] + "," + opt[2][1] + "," + opt[2][2] + ")" },
+                  title: opt[1],
+                  onClick: function () { set("tint", opt[0]); },
+                });
+              })),
+          }),
+          h(Row, {
+            label: "玻璃质感",
+            hint: "模糊/折射效果档位",
+            children: h("div", { className: "up-seg" },
+              [["airy", "更通透"], ["default", "默认值"], ["readable", "可读性"]].map(function (opt) {
+                return h("button", {
+                  key: opt[0],
+                  className: glassId === opt[0] ? "on" : "",
+                  onClick: function () { set("glass", opt[0]); },
+                }, opt[1]);
+              })),
+          }),
+          h("button", { className: "up-reset", onClick: props.onReset }, "恢复默认设置"),
+        ),
+      );
+    }
+
+    // ============================================================ minimal orb
+    function Orb(props) {
+      return h(
+        "div",
+        { className: "up-orbwrap" },
+        props.alarm ? h("span", { className: "up-orb-dot", title: "余额低额提醒" }) : null,
+        h("div", {
+          className: "up-orb",
+          title: "DeepSeek 用量面板（左键展开 · 右键设置）",
+          ref: props.pillRef,
+          onPointerDown: props.onPointerDown,
+          onPointerMove: props.onPointerMove,
+          onPointerUp: props.onPointerUp,
+          onPointerCancel: props.onPointerUp,
+          onContextMenu: props.onContextMenu,
+        }, logoMark("#4d6bfe")),
+      );
+    }
+
+    // ============================================================== app
     function HudApp() {
       var snapState = useState(null);
       var snap = snapState[0];
       var errState = useState(null);
       var err = errState[0];
-      var expandedState = useState(false);
-      var expanded = expandedState[0];
-      var compactState = useState(false);
-      var compact = compactState[0];
-      var refreshingState = useState(false);
-      var refreshing = refreshingState[0];
-      var posState = useState(function () { return loadPrefs(); });
+      var viewState = useState(0); // 0 收起 | 1 用量窗口 | 2 设置窗口
+      var view = viewState[0];
+      var setView = viewState[1];
+      var closingState = useState(false);
+      var closing = closingState[0];
+      var setClosing = closingState[1];
+      var refreshState = useState(false);
+      var refreshing = refreshState[0];
+      var prefsState = useState(function () { return loadPrefs(); });
+      var prefs = prefsState[0];
+      var setPrefsAll = prefsState[1];
+      var flashState = useState(null); // {at,text}
+      var flash = flashState[0];
+      var hoverPillState = useState(false);
+      var hoverPill = hoverPillState[0];
+      var leavingPillState = useState(false);
+      var leavingPill = leavingPillState[0];
+      var leaveTimerRef = useRef(0);
+      var posState = useState(function () { return { r: prefs.r, b: prefs.b }; });
       var pos = posState[0];
       var setPos = posState[1];
+      var winPosState = useState({ x: 24, y: 24 });
+      var winPos = winPosState[0];
+      var setWinPos = winPosState[1];
 
       var dragStateRef = useRef(null);
       var rafRef = useRef(0);
       var latestPosRef = useRef(pos);
       latestPosRef.current = pos;
-      var winPosState = useState({ x: 24, y: 24 });
-      var winPos = winPosState[0];
-      var setWinPos = winPosState[1];
-      var closingState = useState(false);
-      var closing = closingState[0];
-      var setClosing = closingState[1];
-      var flashState = useState(false);
-      var flash = flashState[0];
-      var setFlash = flashState[1];
+      var rootRef = useRef(null);
+      var pillElRef = useRef(null);
+      var viewRef = useRef(view);
+      viewRef.current = view;
       var closeTimerRef = useRef(0);
+      var flashTimerRef = useRef(0);
+      var seenTurnRef = useRef(0);
+      var alarmNotifiedRef = useRef(false);
+      var prefsRef = useRef(prefs);
+      prefsRef.current = prefs;
 
-      // Pick the window position so it stays fully on-screen: prefer opening to
-      // the right / above the pill, and flip to the left / below when the pill
-      // sits near an edge (so the panel never overflows the viewport).
-      function computeWinPos(w) {
-        var vw = window.innerWidth;
-        var vh = window.innerHeight;
-        var h = Math.min(560, vh - 60);
-        var gap = 12;
-        var pr = vw - latestPosRef.current.r; // pill right edge (x)
-        var pb = vh - latestPosRef.current.b; // pill bottom edge (y)
-        var left, top;
-        if (vw - pr - w - gap >= 8) left = pr + gap; // room to the right
-        else if (pr - w - gap >= 8) left = pr - w - gap; // room to the left
-        else left = Math.min(Math.max(8, vw - w - 8), Math.max(8, pr - w / 2));
-        if (pb - h - gap >= 8) top = pb - h - gap; // room above
-        else if (vh - (pb + gap) - h >= 8) top = pb + gap; // room below
-        else top = Math.min(Math.max(8, vh - h - 8), Math.max(8, pb - h / 2));
-        left = Math.min(Math.max(8, left), Math.max(8, vw - w - 8));
-        top = Math.min(Math.max(8, top), Math.max(8, vh - h - 8));
-        return { x: left, y: top };
-      }
-
-      var applyDrag = useCallback(function (a, b, mode) {
-        var vw = window.innerWidth;
-        var vh = window.innerHeight;
-        if (mode === "pill") {
-          var w1 = 300, hh1 = 40;
-          var r = Math.min(Math.max(8, a), Math.max(8, vw - w1 - 8));
-          var bt = Math.min(Math.max(8, b), Math.max(8, vh - hh1 - 8));
-          if (r !== latestPosRef.current.r || bt !== latestPosRef.current.b) {
-            latestPosRef.current = { r: r, b: bt };
-            setPos({ r: r, b: bt });
-          }
-        } else {
-          var ww = compact ? 380 : 468;
-          var wh = 560;
-          var x = Math.min(Math.max(8, a), Math.max(8, vw - ww - 8));
-          var y = Math.min(Math.max(8, b), Math.max(8, vh - wh - 8));
-          setWinPos({ x: x, y: y });
-        }
-      }, [compact]);
-
-      var scheduleDrag = useCallback(function (mode) {
-        if (rafRef.current) return;
-        rafRef.current = requestAnimationFrame(function () {
-          rafRef.current = 0;
-          var d = dragStateRef.current;
-          if (!d || d.mode !== mode) return;
-          applyDrag(d.a, d.b, mode);
-        });
-      }, [applyDrag]);
-
-      function dragStart(e, mode) {
-        if (e.button !== undefined && e.button !== 0) return;
-        // Don't start a drag from the traffic lights / refresh / link controls —
-        // otherwise the pointer capture swallows their click events.
-        if (e.target && e.target.closest && (e.target.closest(".up-light") || e.target.closest(".up-tbtn") || e.target.closest("a"))) return;
-        var target = e.currentTarget;
-        if (target && typeof target.setPointerCapture === "function") {
+      function updatePrefs(patch) {
+        // 开启余额提醒时，若浏览器尚未授权通知，主动申请一次
+        if (patch.alarm === true && typeof Notification !== "undefined" && Notification.permission === "default") {
           try {
-            target.setPointerCapture(e.pointerId);
-          } catch (err) {
-            /* ignore */
-          }
+            Notification.requestPermission().catch(function () { /* ignore */ });
+          } catch (e) { /* ignore */ }
         }
-        var base = mode === "pill" ? { a: latestPosRef.current.r, b: latestPosRef.current.b } : { a: winPos.x, b: winPos.y };
-        dragStateRef.current = { mode: mode, startX: e.clientX, startY: e.clientY, base: base, a: base.a, b: base.b, moved: false };
+        setPrefsAll(function (p) {
+          var next = Object.assign({}, p, patch);
+          savePrefs(next);
+          return next;
+        });
       }
-      function dragMove(e, mode) {
-        var d = dragStateRef.current;
-        if (!d || d.mode !== mode) return;
-        var dx, dy;
-        if (mode === "pill") {
-          dx = d.startX - e.clientX;
-          dy = d.startY - e.clientY;
-        } else {
-          dx = e.clientX - d.startX;
-          dy = e.clientY - d.startY;
-        }
-        if (Math.abs(dx) + Math.abs(dy) > 3) d.moved = true;
-        d.a = d.base.a + dx;
-        d.b = d.base.b + dy;
-        scheduleDrag(mode);
-      }
-      function dragEnd(e, mode) {
-        var d = dragStateRef.current;
-        if (!d || d.mode !== mode) return;
-        dragStateRef.current = null;
-        var wasMoved = d.moved;
-        if (mode === "pill") {
-          savePrefs(latestPosRef.current);
-          // 轻点（几乎没移动）→ 立刻打开面板，不再依赖 click 事件（click 可能被
-          // 指针捕获/抖动吞掉，导致第一次点击无效）。拖动则不打开。
-          if (!wasMoved) openPanel();
-        }
-        if (rafRef.current) {
-          cancelAnimationFrame(rafRef.current);
-          rafRef.current = 0;
-        }
+      function resetPrefs() {
+        setPrefsAll(function () {
+          var next = Object.assign({}, PREFS_DEFAULTS, { r: latestPosRef.current.r, b: latestPosRef.current.b });
+          savePrefs(next);
+          alarmNotifiedRef.current = false;
+          return next;
+        });
       }
 
+      function clampV(v, lo, hi) {
+        return Math.min(Math.max(lo, v), Math.max(lo, hi));
+      }
+      function currentBox() {
+        var host = rootRef.current && rootRef.current.offsetParent;
+        if (!host) return { w: window.innerWidth, h: window.innerHeight };
+        var r = host.getBoundingClientRect();
+        return { w: host.clientWidth || r.width || window.innerWidth, h: host.clientHeight || r.height || window.innerHeight };
+      }
+      function pillLocal() {
+        var host = rootRef.current && rootRef.current.offsetParent;
+        var el = pillElRef.current;
+        if (!host || !el) return null;
+        var hr = host.getBoundingClientRect();
+        var pr = el.getBoundingClientRect();
+        return { left: pr.left - hr.left, top: pr.top - hr.top, w: pr.width || 200, h: pr.height || 36 };
+      }
+      function computeWinPos(w) {
+        var b = currentBox();
+        var gap = 12;
+        var hWin = Math.min(560, Math.max(140, b.h - 60));
+        var maxX = Math.max(8, b.w - w - 8);
+        var maxY = Math.max(8, b.h - hWin - 8);
+        var left, top;
+        var p = pillLocal();
+        if (!p) {
+          left = clampV(b.w - w - 16, 8, maxX);
+          top = clampV(b.h - hWin - 16, 8, maxY);
+        } else {
+          var rightEdge = p.left + p.w;
+          var bottomEdge = p.top + p.h;
+          if (b.w - rightEdge - w - gap >= 8) left = rightEdge + gap;
+          else if (p.left - w - gap >= 8) left = p.left - w - gap;
+          else left = clampV(p.left + p.w / 2 - w / 2, 8, maxX);
+          if (p.top - hWin - gap >= 8) top = p.top - hWin - gap;
+          else if (b.h - bottomEdge - gap - hWin >= 8) top = bottomEdge + gap;
+          else top = clampV(p.top + p.h / 2 - hWin / 2, 8, maxY);
+        }
+        return { x: clampV(left, 8, maxX), y: clampV(top, 8, maxY) };
+      }
+
+      // ---------- theme / accent / glass ----------
+      function applyThemeVars() {
+        var el = rootRef.current;
+        if (!el) return;
+        var dark = isDarkTheme();
+        var tint = TINTS[prefsRef.current.tint] || TINTS.auto;
+        var g = GLASS[prefsRef.current.glass] || GLASS.default;
+        var ch = dark ? tint.dark : tint.light;
+        var a = dark ? g.alphaD : g.alphaL;
+        var st = el.style;
+        st.setProperty("--up-win", "rgba(" + ch[0] + "," + ch[1] + "," + ch[2] + "," + a + ")");
+        st.setProperty("--up-win2", "rgba(" + ch[0] + "," + ch[1] + "," + ch[2] + "," + Math.min(1, a + 0.12) + ")");
+        st.setProperty("--up-blur", g.blur + "px");
+      }
+      useEffect(function () {
+        applyThemeVars();
+        var mo = null;
+        if (typeof MutationObserver !== "undefined" && document.body) {
+          mo = new MutationObserver(function () { applyThemeVars(); });
+          mo.observe(document.body, { attributes: true, attributeFilter: ["class", "data-ds-dark-theme"] });
+        }
+        return function () { if (mo) mo.disconnect(); };
+        // [prefs]：设置里改背景色/玻璃档位时立即重刷
+      }, [prefs]);
+
+      // ---------- stylesheet ----------
       useEffect(function () {
         var styleId = "dsh-deepseek-usage-panel-style";
         if (!document.getElementById(styleId)) {
@@ -843,6 +1090,42 @@ window.__ModuleLoader__.load({
         };
       }, []);
 
+      // ---------- container resize re-clamp ----------
+      useEffect(function () {
+        var tidyTimer = 0;
+        function tidy() {
+          var host = rootRef.current && rootRef.current.offsetParent;
+          if (!host) return;
+          var b = currentBox();
+          var cur = latestPosRef.current;
+          var nr = clampV(cur.r, 8, Math.max(8, b.w - 300 - 8));
+          var nb = clampV(cur.b, 8, Math.max(8, b.h - 40 - 8));
+          if (nr !== cur.r || nb !== cur.b) {
+            latestPosRef.current = { r: nr, b: nb };
+            setPos({ r: nr, b: nb });
+          }
+          if (viewRef.current !== 0) {
+            setWinPos(function (wp) {
+              var ww = viewRef.current === 2 ? 300 : 468;
+              var wh = Math.min(560, Math.max(140, b.h - 60));
+              var x = clampV(wp.x, 8, Math.max(8, b.w - ww - 8));
+              var y = clampV(wp.y, 8, Math.max(8, b.h - wh - 8));
+              return (x === wp.x && y === wp.y) ? wp : { x: x, y: y };
+            });
+          }
+        }
+        var host = rootRef.current && rootRef.current.offsetParent;
+        if (!host || typeof ResizeObserver === "undefined") return undefined;
+        var ro = new ResizeObserver(function () {
+          if (tidyTimer) clearTimeout(tidyTimer);
+          tidyTimer = setTimeout(tidy, 80);
+        });
+        ro.observe(host);
+        tidy();
+        return function () { ro.disconnect(); if (tidyTimer) clearTimeout(tidyTimer); };
+      }, []);
+
+      // ---------- polling (回合提示开启时更快轮询) ----------
       useEffect(function () {
         var cancelled = false;
         var timer = 0;
@@ -858,7 +1141,8 @@ window.__ModuleLoader__.load({
               failCount = 0;
               snapState[1](value);
               errState[1](null);
-              timer = setTimeout(fetchOnce, 45000);
+              var interval = prefsRef.current.turnFlash ? 12000 : 45000;
+              timer = setTimeout(fetchOnce, interval);
             })
             .catch(function (e) {
               if (cancelled) return;
@@ -868,78 +1152,190 @@ window.__ModuleLoader__.load({
             });
         };
         fetchOnce();
-        return function () {
-          cancelled = true;
-          if (timer) clearTimeout(timer);
-        };
+        return function () { cancelled = true; if (timer) clearTimeout(timer); };
+      }, []);
+
+      // ---------- 回合用量闪现 ----------
+      useEffect(function () {
+        var lt = snap && snap.lastTurn;
+        if (!lt || !prefsRef.current.turnFlash) return;
+        if (!seenTurnRef.current) {
+          seenTurnRef.current = lt.at; // 基线：启动前的旧回合不弹
+          return;
+        }
+        if (lt.at === seenTurnRef.current) return;
+        seenTurnRef.current = lt.at;
+        if (Date.now() - lt.at > 60 * 1000) return;
+        if (flashTimerRef.current) clearTimeout(flashTimerRef.current);
+        flashState[1]({ at: lt.at, text: "本回合 ↑ " + fmtTokens(lt.totalTokens) });
+        flashTimerRef.current = setTimeout(function () { flashState[1](null); }, 2600);
+      }, [snap]);
+      useEffect(function () {
+        return function () { if (flashTimerRef.current) clearTimeout(flashTimerRef.current); };
+      }, []);
+
+      // ---------- 余额报警（视觉指示灯 + 系统通知）----------
+      useEffect(function () {
+        var b = snap && snap.balance;
+        var on = prefsRef.current.alarm;
+        var low = on && b && b.configured && !b.error && b.totalBalance != null && parseFloat(b.totalBalance) <= Number(prefsRef.current.alarmThreshold || 0);
+        if (!low) {
+          alarmNotifiedRef.current = false;
+          return;
+        }
+        if (alarmNotifiedRef.current) return;
+        alarmNotifiedRef.current = true;
+        if (typeof Notification !== "undefined" && Notification.permission === "granted") {
+          try {
+            new Notification("DeepSeek 余额不足", { body: "当前余额 " + fmtMoney(b.totalBalance, b.currency) + "，已低于提醒阈值。" });
+          } catch (e) { /* ignore */ }
+        }
+      }, [snap, prefs]);
+
+      // ---------- open / close / view ----------
+      function cancelCloseTimer() {
+        if (closeTimerRef.current) { clearTimeout(closeTimerRef.current); closeTimerRef.current = 0; }
+      }
+      function showView(v, w) {
+        if (viewRef.current === v && viewRef.current !== 0) return;
+        // 打开/切换面板前复位“最小悬浮球悬停”状态：避免收起面板后胶囊
+        // 仍停留在展开态（此时鼠标已不在胶囊上，收不到 mouseleave）。
+        hoverPillState[1](false);
+        leavingPillState[1](false);
+        if (leaveTimerRef.current) { clearTimeout(leaveTimerRef.current); leaveTimerRef.current = 0; }
+        cancelCloseTimer();
+        setClosing(false);
+        setWinPos(computeWinPos(w));
+        setView(v);
+      }
+      function openPanel() { showView(1, 468); }
+      function openSettings() {
+        showView(2, 300);
+      }
+      function closeView() {
+        if (viewRef.current === 0 || closing) return;
+        setClosing(true);
+        cancelCloseTimer();
+        closeTimerRef.current = setTimeout(function () {
+          closeTimerRef.current = 0;
+          setClosing(false);
+          setView(0);
+          savePrefs(Object.assign({}, prefsRef.current, { r: latestPosRef.current.r, b: latestPosRef.current.b }));
+        }, 180);
+      }
+      useEffect(function () {
+        if (viewRef.current === 0) return undefined;
+        var onKey = function (e) { if (e && e.key === "Escape") closeView(); };
+        window.addEventListener("keydown", onKey);
+        return function () { window.removeEventListener("keydown", onKey); };
+      }, [view, closing]);
+      useEffect(function () {
+        return function () { if (closeTimerRef.current) clearTimeout(closeTimerRef.current); };
       }, []);
 
       function refreshNow() {
         if (refreshing) return;
-        refreshingState[1](true);
+        refreshState[1](true);
         triggerRefresh()
           .then(function (value) {
             snapState[1](value);
             errState[1](null);
-            setFlash(true);
-            setTimeout(function () { setFlash(false); }, 1400);
           })
-          .catch(function (e) {
-            errState[1](e && e.message ? e.message : String(e));
-          })
-          .then(function () {
-            refreshingState[1](false);
-          });
+          .catch(function (e) { errState[1](e && e.message ? e.message : String(e)); })
+          .then(function () { refreshState[1](false); });
       }
 
-      function openPanel() {
-        if (expanded) return; // 已打开/正在打开则忽略（指针捕获可能重复触发）
-        setClosing(false);
-        if (closeTimerRef.current) {
-          clearTimeout(closeTimerRef.current);
-          closeTimerRef.current = 0;
+      // ---------- drag ----------
+      var applyDrag = function (a, b, mode) {
+        var box = currentBox();
+        if (mode === "pill") {
+          var r = clampV(a, 8, Math.max(8, box.w - 300 - 8));
+          var bt = clampV(b, 8, Math.max(8, box.h - 40 - 8));
+          if (r !== latestPosRef.current.r || bt !== latestPosRef.current.b) {
+            latestPosRef.current = { r: r, b: bt };
+            setPos({ r: r, b: bt });
+          }
+        } else {
+          var ww = viewRef.current === 2 ? 300 : 468;
+          var wh = Math.min(560, Math.max(140, box.h - 60));
+          setWinPos({ x: clampV(a, 8, Math.max(8, box.w - ww - 8)), y: clampV(b, 8, Math.max(8, box.h - wh - 8)) });
         }
-        var w = compact ? 380 : 468;
-        setWinPos(computeWinPos(w));
-        expandedState[1](true);
+      };
+      var scheduleDrag = function (mode) {
+        if (rafRef.current) return;
+        rafRef.current = requestAnimationFrame(function () {
+          rafRef.current = 0;
+          var d = dragStateRef.current;
+          if (!d || d.mode !== mode) return;
+          applyDrag(d.a, d.b, mode);
+        });
+      };
+      function dragStart(e, mode) {
+        if (e.button !== undefined && e.button !== 0) return;
+        if (e.target && e.target.closest && (e.target.closest(".up-light") || e.target.closest(".up-tbtn") || e.target.closest("a"))) return;
+        var target = e.currentTarget;
+        if (target && typeof target.setPointerCapture === "function") {
+          try { target.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+        }
+        var base = mode === "pill" ? { a: latestPosRef.current.r, b: latestPosRef.current.b } : { a: winPos.x, b: winPos.y };
+        dragStateRef.current = { mode: mode, startX: e.clientX, startY: e.clientY, base: base, a: base.a, b: base.b, moved: false };
       }
-      function closePanel() {
-        if (!expanded || closing) return;
-        setClosing(true);
-        if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
-        closeTimerRef.current = setTimeout(function () {
-          closeTimerRef.current = 0;
-          setClosing(false);
-          expandedState[1](false);
-          savePrefs(latestPosRef.current);
-        }, 180);
+      function dragMove(e, mode) {
+        var d = dragStateRef.current;
+        if (!d || d.mode !== mode) return;
+        var dx, dy;
+        if (mode === "pill") { dx = d.startX - e.clientX; dy = d.startY - e.clientY; }
+        else { dx = e.clientX - d.startX; dy = e.clientY - d.startY; }
+        if (Math.abs(dx) + Math.abs(dy) > 3) d.moved = true;
+        d.a = d.base.a + dx;
+        d.b = d.base.b + dy;
+        scheduleDrag(mode);
       }
-      useEffect(function () {
-        if (!expanded) return undefined;
-        var onKey = function (e) {
-          if (e && e.key === "Escape") closePanel();
-        };
-        window.addEventListener("keydown", onKey);
-        return function () {
-          window.removeEventListener("keydown", onKey);
-        };
-      }, [expanded]);
+      function dragEnd(e, mode) {
+        var d = dragStateRef.current;
+        if (!d || d.mode !== mode) return;
+        dragStateRef.current = null;
+        var wasMoved = d.moved;
+        if (mode === "pill") {
+          savePrefs(Object.assign({}, prefsRef.current, { r: latestPosRef.current.r, b: latestPosRef.current.b }));
+          if (!wasMoved) openPanel();
+        }
+        if (rafRef.current) { cancelAnimationFrame(rafRef.current); rafRef.current = 0; }
+      }
 
-      var dotCls = dotClassFor(snap);
+      var onCtx = function (e) {
+        if (e && e.preventDefault) e.preventDefault();
+        openSettings();
+      };
+      var pointerHandlers = function (mode) {
+        return {
+          onPointerDown: function (e) { dragStart(e, mode); },
+          onPointerMove: function (e) { dragMove(e, mode); },
+          onPointerUp: function (e) { dragEnd(e, mode); },
+          onPointerCancel: function (e) { dragEnd(e, mode); },
+        };
+      };
 
-      if (expanded) {
+      var accentHex = "#4d6bfe";
+      var sig = balanceSignal(snap && snap.balance, prefs);
+      var orbRed = sig.orbRed;
+      var dotCls = sig.dot;
+      var flashNode = flash && prefs.turnFlash ? h("div", { className: "up-flash", key: String(flash.at) }, flash.text) : null;
+
+      if (view === 1) {
         return h(
           "div",
-          { className: "up-root", style: { left: winPos.x + "px", top: winPos.y + "px" } },
+          { className: "up-root", style: { left: winPos.x + "px", top: winPos.y + "px" }, ref: function (n) { rootRef.current = n; } },
           h(Window, {
             snap: snap,
-            compact: compact,
+            compact: false,
             closing: closing,
             error: err,
             refreshing: refreshing,
-            flash: flash,
-            onClose: closePanel,
-            onZoom: function () { closePanel(); },
+            flash: flash ? true : false,
+            prefs: prefs,
+            onClose: closeView,
+            onZoom: closeView,
             onRefresh: refreshNow,
             onTitleDown: function (e) { dragStart(e, "win"); },
             onTitleMove: function (e) { dragMove(e, "win"); },
@@ -947,18 +1343,67 @@ window.__ModuleLoader__.load({
           }),
         );
       }
+      if (view === 2) {
+        return h(
+          "div",
+          { className: "up-root", style: { left: winPos.x + "px", top: winPos.y + "px" }, ref: function (n) { rootRef.current = n; } },
+          h(SettingsPanel, {
+            prefs: prefs,
+            closing: closing,
+            onChange: function (field, value) { updatePrefs({ [field]: value }); },
+            onReset: function () { resetPrefs(); },
+            onClose: closeView,
+            onTitleDown: function (e) { dragStart(e, "win"); },
+            onTitleMove: function (e) { dragMove(e, "win"); },
+            onTitleUp: function (e) { dragEnd(e, "win"); },
+            onTitleCancel: function (e) { dragEnd(e, "win"); },
+          }),
+        );
+      }
+      // collapsed: minimal orb ⇄ pill（胶囊由悬浮球“膨胀展开”）
+      var mini = prefs.minimal;
+      var showPill = !mini || hoverPill || leavingPill;
+      var holderHandlers = mini
+        ? {
+            onMouseEnter: function () {
+              if (leaveTimerRef.current) clearTimeout(leaveTimerRef.current);
+              leaveTimerRef.current = 0;
+              leavingPillState[1](false);
+              hoverPillState[1](true);
+            },
+            onMouseLeave: function () {
+              if (leavingPill) return;
+              leavingPillState[1](true);
+              if (leaveTimerRef.current) clearTimeout(leaveTimerRef.current);
+              leaveTimerRef.current = setTimeout(function () {
+                leaveTimerRef.current = 0;
+                leavingPillState[1](false);
+                hoverPillState[1](false);
+              }, 170);
+            },
+          }
+        : null;
       return h(
         "div",
-        { className: "up-root", style: { right: pos.r + "px", bottom: pos.b + "px" } },
-        h(Pill, {
-          snap: snap,
-          dotCls: dotCls,
-          dragRef: dragStateRef,
-          onPointerDown: function (e) { dragStart(e, "pill"); },
-          onPointerMove: function (e) { dragMove(e, "pill"); },
-          onPointerUp: function (e) { dragEnd(e, "pill"); },
-          onPointerCancel: function (e) { dragEnd(e, "pill"); },
-        }),
+        Object.assign(
+          { className: "up-root", style: { right: pos.r + "px", bottom: pos.b + "px" }, ref: function (n) { rootRef.current = n; } },
+          holderHandlers || {},
+        ),
+        flashNode,
+        showPill
+          ? h(Pill, Object.assign({
+              snap: snap,
+              dotCls: dotCls,
+              accent: accentHex,
+              cls: mini ? (leavingPill ? "shrink" : "grow") : "",
+              pillRef: pillElRef,
+              onContextMenu: onCtx,
+            }, pointerHandlers("pill")))
+          : h(Orb, Object.assign({
+              alarm: orbRed,
+              pillRef: pillElRef,
+              onContextMenu: onCtx,
+            }, pointerHandlers("pill"))),
       );
     }
 

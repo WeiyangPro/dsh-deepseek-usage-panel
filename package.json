@@ -1,6 +1,6 @@
 {
   "name": "dsh-deepseek-usage-panel",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Floating macOS-glass DeepSeek usage panel for the DSH web UI: live official balance + token usage (today, session, 24 h smooth trend, per model) without opening platform.deepseek.com/usage. · DSH 毛玻璃用量面板：官方余额 + Token 用量",
   "type": "module",
   "main": "index.js",
@@ -44,7 +44,7 @@
   "dsh": {
     "id": "dsh-deepseek-usage-panel",
     "name": "用量面板",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "repo": "WeiyangPro/dsh-usage-panel",
     "permissions": "读取配置的 DeepSeek API Key 轮询 GET /user/balance；监听 session/event 用量；注册 /dsh-usage/api HTTP 路由；在数据目录保存滚动用量历史",
     "bundle": {
