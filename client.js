@@ -28,10 +28,16 @@ window.__ModuleLoader__.load({
     var useEffect = react.useEffect;
     var useRef = react.useRef;
     var useCallback = react.useCallback;
+    // 用 react-dom 的 portal 把 UI 渲染到 body 级 host：事件（拖拽/点击/悬停）由
+    // React 合成事件系统在 portal 容器上委托，DOM 位置在 React 树外也不受影响。
+    // （手动 appendChild 会让节点脱离 React 委托容器，导致全部交互失活。）
+    var reactDom = null;
+    try { reactDom = require("react-dom"); } catch (e) { reactDom = null; }
 
     // ------------------------------------------------------------------ css
     var UH_CSS = [
-      ".up-root{position:absolute;z-index:2;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,'PingFang SC','Microsoft YaHei',sans-serif}",
+      "#dsh-usage-panel-host{position:fixed;inset:0;z-index:30;pointer-events:none}",
+      ".up-root{position:fixed;z-index:2;pointer-events:auto;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,'PingFang SC','Microsoft YaHei',sans-serif}",
       ".up-root,.up-root *{box-sizing:border-box}",
       "body[data-ds-dark-theme]{--up-win:rgba(11,11,16,.25);--up-win2:rgba(20,20,28,.34);--up-brd:rgba(255,255,255,.14);--up-brds:rgba(255,255,255,.08);--up-hi:rgba(255,255,255,.16);--up-txt:rgba(255,255,255,.94);--up-dim:rgba(255,255,255,.58);--up-faint:rgba(255,255,255,.4);--up-card:rgba(255,255,255,.055);--up-cardh:rgba(255,255,255,.1);--up-grid:rgba(255,255,255,.09);--up-sh:0 16px 50px rgba(0,0,0,.42),0 2px 10px rgba(0,0,0,.3);--up-redglow:rgba(255,69,58,.32);--up-blur:10px}",
       "body:not([data-ds-dark-theme]){--up-win:rgba(255,255,255,.3);--up-win2:rgba(255,255,255,.42);--up-brd:rgba(0,0,0,.12);--up-brds:rgba(0,0,0,.06);--up-hi:rgba(255,255,255,.9);--up-txt:rgba(18,18,26,.92);--up-dim:rgba(18,18,26,.55);--up-faint:rgba(18,18,26,.38);--up-card:rgba(18,18,26,.045);--up-cardh:rgba(18,18,26,.09);--up-grid:rgba(18,18,26,.08);--up-sh:0 16px 60px rgba(30,30,60,.2),0 2px 10px rgba(30,30,60,.1);--up-redglow:rgba(255,69,58,.24);--up-blur:10px}",
@@ -141,7 +147,7 @@ window.__ModuleLoader__.load({
       ".up-orb:hover{background:var(--up-win2)}",
       ".up-orb:active{transform:scale(.94)}",
       ".up-orb svg{width:28px;height:28px;display:block}",
-      ".up-dot.alarm{background:#ff453a;box-shadow:0 0 0 3px var(--up-redglow);animation:up-alarm 1.1s ease-in-out infinite}.up-pill.grow{transform-origin:100% 100%;animation:up-grow .24s cubic-bezier(.2,.9,.3,1.1)}.up-pill.shrink{transform-origin:100% 100%;animation:up-shrink .16s ease forwards}@keyframes up-grow{from{opacity:0;transform:scale(.42) translate(6px,6px)}to{opacity:1;transform:scale(1) translate(0,0)}}@keyframes up-shrink{to{opacity:0;transform:scale(.5)}}",
+      ".up-dot.alarm{background:#ff453a;box-shadow:0 0 0 3px var(--up-redglow);animation:up-alarm 1.1s ease-in-out infinite}.up-pill.grow{transform-origin:100% 100%;animation:up-grow .24s cubic-bezier(.2,.9,.3,1.1)}.up-pill.shrink{transform-origin:100% 100%;animation:up-shrink .16s ease forwards}.up-pill.growR{transform-origin:0% 100%;animation:up-grow .24s cubic-bezier(.2,.9,.3,1.1)}.up-pill.shrinkR{transform-origin:0% 100%;animation:up-shrink .16s ease forwards}@keyframes up-grow{from{opacity:0;transform:scale(.42) translate(6px,6px)}to{opacity:1;transform:scale(1) translate(0,0)}}@keyframes up-shrink{to{opacity:0;transform:scale(.5)}}",
       "@keyframes up-alarm{0%,100%{box-shadow:0 0 0 3px var(--up-redglow)}50%{box-shadow:0 0 0 7px rgba(255,69,58,.15)}}",
       ".up-orbwrap{position:relative;display:inline-flex}",
       ".up-orb-dot{position:absolute;top:0;right:0;z-index:2;width:14px;height:14px;border-radius:50%;background:#ff453a;border:2px solid var(--up-win);transform:translate(-1px,1px);box-shadow:0 0 0 2px var(--up-redglow);animation:up-alarm 1.1s ease-in-out infinite}",
@@ -248,18 +254,25 @@ window.__ModuleLoader__.load({
         var raw = window.localStorage.getItem(PREFS_KEY);
         var p = raw ? JSON.parse(raw) : {};
         var def = PREFS_DEFAULTS;
-        return {
-          r: numOr(p.r, def.r),
-          b: numOr(p.b, def.b),
+        // 坐标参照迁移：旧版本以“对话区容器”为参照存储 r/b；现改为整个屏幕视口。
+        // 首次（无 pos:"screen" 标记）把 r/b 重置为全屏右下角默认值，避免旧的大数值
+        // 偏移让悬浮球停在对话窗右缘。
+        var migratePos = p.pos !== "screen";
+        var res = {
+          r: migratePos ? def.r : numOr(p.r, def.r),
+          b: migratePos ? def.b : numOr(p.b, def.b),
           alarm: boolOr(p.alarm, def.alarm),
           alarmThreshold: numOr(p.alarmThreshold, def.alarmThreshold),
           minimal: boolOr(p.minimal, def.minimal),
           turnFlash: boolOr(p.turnFlash, def.turnFlash),
           tint: TINTS[p.tint] ? p.tint : def.tint,
           glass: (p.glass === "solid" ? "readable" : GLASS[p.glass] ? p.glass : def.glass),
+          pos: "screen",
         };
+        if (migratePos) { try { savePrefs(res); } catch (e) { /* ignore */ } }
+        return res;
       } catch (e) {
-        return { ...PREFS_DEFAULTS };
+        return { ...PREFS_DEFAULTS, pos: "screen" };
       }
     }
     function savePrefs(p) {
@@ -970,6 +983,15 @@ window.__ModuleLoader__.load({
       var winPos = winPosState[0];
       var setWinPos = winPosState[1];
 
+      // 工作台打开前悬浮球的 r（关闭后还原；r/b 均为距视口右/下边缘的距离）
+      var restRRef = useRef(null);
+      // 用量窗口是否被用户手动拖过：拖过后工作台打开时不再自动把它让出去
+      var userMovedWinRef = useRef(false);
+      // 打开面板那一帧的悬浮球位置快照（面板展开后球会卸载，用它来贴紧球）
+      var lastOrbRef = useRef(null);
+      // 各面板实测高度缓存（按宽度 300/468），第二次起打开即贴紧、无跳动
+      var winHCacheRef = useRef(null);
+
       var dragStateRef = useRef(null);
       var rafRef = useRef(0);
       var latestPosRef = useRef(pos);
@@ -1010,39 +1032,85 @@ window.__ModuleLoader__.load({
       function clampV(v, lo, hi) {
         return Math.min(Math.max(lo, v), Math.max(lo, hi));
       }
-      function currentBox() {
-        var host = rootRef.current && rootRef.current.offsetParent;
-        if (!host) return { w: window.innerWidth, h: window.innerHeight };
-        var r = host.getBoundingClientRect();
-        return { w: host.clientWidth || r.width || window.innerWidth, h: host.clientHeight || r.height || window.innerHeight };
+      // ---------- 定位参照：整个屏幕（视口） ----------
+      // UI 位于 body 级 #dsh-usage-panel-host（position:fixed;inset:0），
+      // 悬浮球/窗口直接按视口坐标定位：right/bottom 与 left/top 都指“距视口边缘”。
+      // better-sidebar 0.18：右侧工作台打开时把保留宽度写进 <html> 内联变量
+      // --dsh-sidebar-width（收起/窄屏为 0px）；读它把“可见右边界”左移，自动让位。
+      function sidebarReserve() {
+        var v = 0;
+        try {
+          var s = window.getComputedStyle(document.documentElement).getPropertyValue("--dsh-sidebar-width");
+          if (s) v = parseInt(s, 10) || 0;
+        } catch (e) { /* ignore */ }
+        return v > 0 ? v : 0;
+      }
+      function geo() {
+        var vpW = window.innerWidth;
+        var vpH = window.innerHeight;
+        var res = sidebarReserve();
+        var effRight = vpW - res; // 工作台左缘；无保留区时 = 视口右缘
+        return { w: vpW, h: vpH, res: res, effRight: effRight, overhang: res, effW: effRight };
       }
       function pillLocal() {
-        var host = rootRef.current && rootRef.current.offsetParent;
         var el = pillElRef.current;
-        if (!host || !el) return null;
-        var hr = host.getBoundingClientRect();
+        if (!el) return null;
         var pr = el.getBoundingClientRect();
-        return { left: pr.left - hr.left, top: pr.top - hr.top, w: pr.width || 200, h: pr.height || 36 };
+        return { left: pr.left, top: pr.top, w: pr.width || 200, h: pr.height || 36 };
       }
-      function computeWinPos(w) {
-        var b = currentBox();
+      // 当前形态的“贴边”尺寸：极简模式持久元素是 54px 悬浮球（可按球贴边，展开胶囊
+      // 由朝向翻转兜底）；非极简模式持久元素是胶囊（按实测/估算宽度，保证胶囊不溢出）。
+      function stateW() {
+        if (prefsRef.current.minimal) return 54;
+        var el = pillElRef.current;
+        if (el) { var w = el.getBoundingClientRect().width; if (w && w > 30) return Math.round(w); }
+        return 300;
+      }
+      function stateH() {
+        if (prefsRef.current.minimal) return 54;
+        var el = pillElRef.current;
+        if (el) { var h = el.getBoundingClientRect().height; if (h && h > 20) return Math.round(h); }
+        return 44;
+      }
+      // 胶囊方向：极简模式贴左边缘时朝屏幕内侧（右）展开，避免溢出。
+      // 用胶囊最大宽度常量做阈值（首次展开那一帧 pillElRef 还是悬浮球，测量值不可靠；
+      // 常量保证贴边必翻对且永不溢出）。
+      function pillGrowsRight() {
+        var mini = prefsRef.current.minimal;
+        if (!mini) return false;
+        var orbW = 54;
+        var pw = 300; // 胶囊最大宽度兜底
+        var roomLeft = window.innerWidth - pos.r;              // 球右缘到屏幕左缘的空间
+        var pillRight = window.innerWidth - pos.r - orbW + pw; // 右向展开后的胶囊右缘
+        return roomLeft < pw + 8 && pillRight <= window.innerWidth - 8;
+      }
+      // 窗口纵向高度：拖动/夹取时用已挂载窗口的实测高度（矮的设置面板才能拖到页面
+      // 底部、不被 560 的假设高度顶住）；创建时窗口未挂载，按宽度估算。
+      function winHFor(ww) {
+        var key = ww <= 320 ? 300 : 468;
+        var c = winHCacheRef.current && winHCacheRef.current[key];
+        if (c) return c; // 实测过的面板高（贴紧）
+        return ww <= 320 ? 440 : Math.min(560, Math.max(140, window.innerHeight - 60));
+      }
+      function computeWinPos(w, hh) {
+        var g = geo();
+        var b = { w: g.w, h: g.h };
         var gap = 12;
-        var hWin = Math.min(560, Math.max(140, b.h - 60));
-        var maxX = Math.max(8, b.w - w - 8);
+        var hWin = hh || winHFor(w);
+        var maxX = Math.max(8, b.w - w - 8); // 全屏视口（z30 悬浮其上，不强制避开工作台）
         var maxY = Math.max(8, b.h - hWin - 8);
         var left, top;
-        var p = pillLocal();
+        var p = lastOrbRef.current || pillLocal();
         if (!p) {
+          // 无胶囊（窗口已展开重排）：回退到全屏右下角
           left = clampV(b.w - w - 16, 8, maxX);
           top = clampV(b.h - hWin - 16, 8, maxY);
         } else {
-          var rightEdge = p.left + p.w;
-          var bottomEdge = p.top + p.h;
-          if (b.w - rightEdge - w - gap >= 8) left = rightEdge + gap;
-          else if (p.left - w - gap >= 8) left = p.left - w - gap;
-          else left = clampV(p.left + p.w / 2 - w / 2, 8, maxX);
+          // 锚定胶囊右上角：右对齐胶囊右缘（悬浮球在全屏右下角 → 窗口也贴右下角），
+          // 先向上弹出，上方高度不足再向下，避免“往胶囊左侧横移”导致窗口落在对话区中间。
+          left = clampV(p.left + p.w - w, 8, maxX);
           if (p.top - hWin - gap >= 8) top = p.top - hWin - gap;
-          else if (b.h - bottomEdge - gap - hWin >= 8) top = bottomEdge + gap;
+          else if (b.h - (p.top + p.h) - gap - hWin >= 8) top = p.top + p.h + gap;
           else top = clampV(p.top + p.h / 2 - hWin / 2, 8, maxY);
         }
         return { x: clampV(left, 8, maxX), y: clampV(top, 8, maxY) };
@@ -1090,16 +1158,41 @@ window.__ModuleLoader__.load({
         };
       }, []);
 
-      // ---------- container resize re-clamp ----------
+      // ---------- geometry sync：better-sidebar 保留区 / 视口 ----------
+      // 定位参照 = 整个屏幕。better-sidebar 0.18 打开右侧工作台时，把 r 顶到
+      // res+8（贴在工作台左缘）一次；关闭后还原为打开前的位置。
       useEffect(function () {
         var tidyTimer = 0;
+        var lastRes = 0;
         function tidy() {
-          var host = rootRef.current && rootRef.current.offsetParent;
-          if (!host) return;
-          var b = currentBox();
+          var g = geo();
+          var b = { w: g.w, h: g.h };
           var cur = latestPosRef.current;
-          var nr = clampV(cur.r, 8, Math.max(8, b.w - 300 - 8));
-          var nb = clampV(cur.b, 8, Math.max(8, b.h - 40 - 8));
+          var openEdge = g.res > 0 && lastRes === 0; // 工作台刚打开
+          if (openEdge) {
+            restRRef.current = cur.r; // 记下打开前的位置（关闭时还原）
+            // 自动让位一次（仅打开瞬间）：把小球移出工作台保留区；
+            // 之后拖拽自由，不再被强制回拉
+            var parkR = clampV(Math.max(cur.r, g.overhang + 8), 8, Math.max(8, b.w - stateW() - 8));
+            if (parkR !== cur.r) {
+              latestPosRef.current = { r: parkR, b: cur.b };
+              setPos({ r: parkR, b: cur.b });
+              cur = { r: parkR, b: cur.b };
+            }
+          }
+          if (g.res === 0 && lastRes > 0) {
+            var restoreR = restRRef.current == null ? cur.r : Math.min(restRRef.current, Math.max(8, b.w - stateW() - 8));
+            restRRef.current = null;
+            if (restoreR !== cur.r) {
+              latestPosRef.current = { r: restoreR, b: cur.b };
+              setPos({ r: restoreR, b: cur.b });
+              cur = { r: restoreR, b: cur.b };
+            }
+          }
+          lastRes = g.res;
+          // 常规容器夹取（按当前形态尺寸，保证能贴边又不溢出）
+          var nr = clampV(cur.r, 8, Math.max(8, b.w - stateW() - 8));
+          var nb = clampV(cur.b, 8, Math.max(8, b.h - stateH() - 8));
           if (nr !== cur.r || nb !== cur.b) {
             latestPosRef.current = { r: nr, b: nb };
             setPos({ r: nr, b: nb });
@@ -1107,23 +1200,60 @@ window.__ModuleLoader__.load({
           if (viewRef.current !== 0) {
             setWinPos(function (wp) {
               var ww = viewRef.current === 2 ? 300 : 468;
-              var wh = Math.min(560, Math.max(140, b.h - 60));
+              var wh = winHFor(ww); // 实测面板高度
               var x = clampV(wp.x, 8, Math.max(8, b.w - ww - 8));
               var y = clampV(wp.y, 8, Math.max(8, b.h - wh - 8));
+              // 工作台刚打开、且窗口未被手动拖过：重新锚定胶囊右上角（避开工作台）
+              if (openEdge && !userMovedWinRef.current) {
+                var np = computeWinPos(ww);
+                x = np.x;
+                y = np.y;
+              }
               return (x === wp.x && y === wp.y) ? wp : { x: x, y: y };
             });
           }
         }
-        var host = rootRef.current && rootRef.current.offsetParent;
-        if (!host || typeof ResizeObserver === "undefined") return undefined;
-        var ro = new ResizeObserver(function () {
+        function scheduleTidy() {
           if (tidyTimer) clearTimeout(tidyTimer);
-          tidyTimer = setTimeout(tidy, 80);
-        });
-        ro.observe(host);
+          tidyTimer = setTimeout(function () { tidyTimer = 0; tidy(); }, 60);
+        }
         tidy();
-        return function () { ro.disconnect(); if (tidyTimer) clearTimeout(tidyTimer); };
+        // better-sidebar 在 <html> 内联 style 上写 --dsh-sidebar-width（含拖拽帧）
+        var mo = null;
+        if (typeof MutationObserver !== "undefined") {
+          mo = new MutationObserver(function () { scheduleTidy(); });
+          mo.observe(document.documentElement, { attributes: true, attributeFilter: ["style"] });
+        }
+        window.addEventListener("resize", scheduleTidy);
+        return function () {
+          if (mo) mo.disconnect();
+          window.removeEventListener("resize", scheduleTidy);
+          if (tidyTimer) clearTimeout(tidyTimer);
+        };
       }, []);
+
+      // ---------- 提升层级 ----------
+      // UI 经 react-dom portal 渲染进 body 级 host（见 HudApp 返回处的 withPortal），
+      // 无需手动搬 DOM；事件由 React portal 委托，不受影响。
+      //（注意：不要在 effect 里 appendChild 搬动 .up-root —— 那会使合成事件失活。）
+
+      // ---------- 面板贴紧：首帧后测真实高度并缓存，重新贴到悬浮球上方 ----------
+      // 消除“用预估值摆放导致的多余空隙”，第二次起打开即贴紧、无跳动。
+      useEffect(function () {
+        if (viewRef.current === 0) return undefined;
+        var ww = viewRef.current === 2 ? 300 : 468;
+        var el = rootRef.current;
+        var h = el ? el.getBoundingClientRect().height : 0;
+        if (h && h > 30) {
+          if (!winHCacheRef.current) winHCacheRef.current = {};
+          winHCacheRef.current[ww <= 320 ? 300 : 468] = Math.round(h);
+        }
+        // 未被手动拖过：用实测高度重新摆放，让面板底部贴紧悬浮球（12px 间距）
+        if (!userMovedWinRef.current) {
+          var np = computeWinPos(ww, h > 30 ? h : undefined);
+          setWinPos(np);
+        }
+      }, [view]);
 
       // ---------- polling (回合提示开启时更快轮询) ----------
       useEffect(function () {
@@ -1205,6 +1335,9 @@ window.__ModuleLoader__.load({
         if (leaveTimerRef.current) { clearTimeout(leaveTimerRef.current); leaveTimerRef.current = 0; }
         cancelCloseTimer();
         setClosing(false);
+        // 快照悬浮球当前位置：面板展开后球会卸载，后续贴紧仍用它
+        var pp = pillLocal();
+        if (pp) lastOrbRef.current = pp;
         setWinPos(computeWinPos(w));
         setView(v);
       }
@@ -1220,6 +1353,7 @@ window.__ModuleLoader__.load({
           closeTimerRef.current = 0;
           setClosing(false);
           setView(0);
+          userMovedWinRef.current = false; // 下次打开重新参与“自动让位”
           savePrefs(Object.assign({}, prefsRef.current, { r: latestPosRef.current.r, b: latestPosRef.current.b }));
         }, 180);
       }
@@ -1247,18 +1381,25 @@ window.__ModuleLoader__.load({
 
       // ---------- drag ----------
       var applyDrag = function (a, b, mode) {
-        var box = currentBox();
+        var g = geo();
         if (mode === "pill") {
-          var r = clampV(a, 8, Math.max(8, box.w - 300 - 8));
-          var bt = clampV(b, 8, Math.max(8, box.h - 40 - 8));
+          // 用当前形态尺寸夹取：极简模式按悬浮球(54)夹取使球能贴边；非极简按胶囊夹取
+          var useW = stateW();
+          var useH = stateH();
+          var r = clampV(a, 8, Math.max(8, g.w - useW - 8));
+          var bt = clampV(b, 8, Math.max(8, g.h - useH - 8));
           if (r !== latestPosRef.current.r || bt !== latestPosRef.current.b) {
             latestPosRef.current = { r: r, b: bt };
             setPos({ r: r, b: bt });
           }
+          // 用户在工作台打开时拖动：让关闭后的还原基准跟随这次拖动
+          if (g.res > 0 && restRRef) restRRef.current = r;
         } else {
+          // 窗口被手动拖动后：不再参与“打开时自动让位”
+          userMovedWinRef.current = true;
           var ww = viewRef.current === 2 ? 300 : 468;
-          var wh = Math.min(560, Math.max(140, box.h - 60));
-          setWinPos({ x: clampV(a, 8, Math.max(8, box.w - ww - 8)), y: clampV(b, 8, Math.max(8, box.h - wh - 8)) });
+          var wh = winHFor(ww); // 用实测面板高度夹取，矮面板可拖到底部
+          setWinPos({ x: clampV(a, 8, Math.max(8, g.w - ww - 8)), y: clampV(b, 8, Math.max(8, g.h - wh - 8)) });
         }
       };
       var scheduleDrag = function (mode) {
@@ -1323,7 +1464,7 @@ window.__ModuleLoader__.load({
       var flashNode = flash && prefs.turnFlash ? h("div", { className: "up-flash", key: String(flash.at) }, flash.text) : null;
 
       if (view === 1) {
-        return h(
+        var rootEl = h(
           "div",
           { className: "up-root", style: { left: winPos.x + "px", top: winPos.y + "px" }, ref: function (n) { rootRef.current = n; } },
           h(Window, {
@@ -1342,9 +1483,10 @@ window.__ModuleLoader__.load({
             onTitleUp: function (e) { dragEnd(e, "win"); },
           }),
         );
+        return withPortal(rootEl);
       }
       if (view === 2) {
-        return h(
+        var rootEl2 = h(
           "div",
           { className: "up-root", style: { left: winPos.x + "px", top: winPos.y + "px" }, ref: function (n) { rootRef.current = n; } },
           h(SettingsPanel, {
@@ -1359,6 +1501,7 @@ window.__ModuleLoader__.load({
             onTitleCancel: function (e) { dragEnd(e, "win"); },
           }),
         );
+        return withPortal(rootEl2);
       }
       // collapsed: minimal orb ⇄ pill（胶囊由悬浮球“膨胀展开”）
       var mini = prefs.minimal;
@@ -1383,10 +1526,15 @@ window.__ModuleLoader__.load({
             },
           }
         : null;
-      return h(
+      var growRight = showPill && mini && pillGrowsRight(); // 贴左边缘时胶囊朝屏幕内侧展开
+      var rootWrapStyle = growRight
+        ? { left: (window.innerWidth - pos.r - 54) + "px", bottom: pos.b + "px" } // 左锚：胶囊向右展开
+        : { right: pos.r + "px", bottom: pos.b + "px" };
+      var pillCls = mini ? (leavingPill ? (growRight ? "shrinkR" : "shrink") : (growRight ? "growR" : "grow")) : "";
+      var rootEl3 = h(
         "div",
         Object.assign(
-          { className: "up-root", style: { right: pos.r + "px", bottom: pos.b + "px" }, ref: function (n) { rootRef.current = n; } },
+          { className: "up-root", style: rootWrapStyle, ref: function (n) { rootRef.current = n; } },
           holderHandlers || {},
         ),
         flashNode,
@@ -1395,7 +1543,7 @@ window.__ModuleLoader__.load({
               snap: snap,
               dotCls: dotCls,
               accent: accentHex,
-              cls: mini ? (leavingPill ? "shrink" : "grow") : "",
+              cls: pillCls,
               pillRef: pillElRef,
               onContextMenu: onCtx,
             }, pointerHandlers("pill")))
@@ -1405,15 +1553,47 @@ window.__ModuleLoader__.load({
               onContextMenu: onCtx,
             }, pointerHandlers("pill"))),
       );
+      return withPortal(rootEl3);
     }
 
     // ------------------------------------------------------------- plugin
     var inject = ["slots"];
 
+    // body 级 host：承载 UI（z-index:30 > better-sidebar host 的 25），
+    // pointer-events:none，只有 .up-root 本体恢复 auto。
+    var hostEl = null;
+    function getHostEl() {
+      if (hostEl && hostEl.parentNode) return hostEl;
+      if (typeof document === "undefined" || !document.body) return null;
+      if (!hostEl) {
+        hostEl = document.createElement("div");
+        hostEl.id = "dsh-usage-panel-host";
+        hostEl.setAttribute("data-plugin", "dsh-deepseek-usage-panel");
+      }
+      document.body.appendChild(hostEl);
+      return hostEl;
+    }
+    function disposeHostEl() {
+      if (hostEl && hostEl.parentNode) {
+        try { hostEl.parentNode.removeChild(hostEl); } catch (e) { /* ignore */ }
+      }
+      hostEl = null;
+    }
+    // react-dom portal：把 UI 渲染进 body 级 host（z-index:30，高于 better-sidebar 的 25）。
+    // portal 由 React 委托事件（拖拽/点击/悬停不受影响）；无 react-dom 时退化为普通子树
+    //（该环境下仅保留“保留区让位”兼容，不提升层级）。
+    function withPortal(node) {
+      if (!reactDom || typeof document === "undefined" || !document.body) return node;
+      var host = getHostEl();
+      if (!host) return node;
+      try { return reactDom.createPortal(node, host); } catch (e) { return node; }
+    }
+
     function apply(ctx) {
       ctx.effect(function () {
+        getHostEl();
         var slots = ctx.get ? ctx.get("slots") : undefined;
-        if (!slots) return function () {};
+        if (!slots) return function () { disposeHostEl(); };
         var dispose = null;
         try {
           slots.inject("shell.overlay", function () {
@@ -1436,6 +1616,7 @@ window.__ModuleLoader__.load({
         return function () {
           if (dispose) dispose();
           dispose = null;
+          disposeHostEl();
         };
       }, "dsh-deepseek-usage-panel: shell.overlay panel");
     }

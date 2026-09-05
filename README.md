@@ -2,13 +2,13 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-4d6bfe" height="20" alt="license-MIT" />&ensp;
-  <img src="https://img.shields.io/badge/version-0.2.1-7c5cff" height="20" alt="version" />&ensp;
+  <img src="https://img.shields.io/badge/version-0.2.2-7c5cff" height="20" alt="version" />&ensp;
   <img src="https://img.shields.io/badge/DeepSeek%20Harness-Web-blue" height="20" alt="platform" />&ensp;
   <img src="https://img.shields.io/badge/node-%E2%89%A520-30d158" height="20" alt="node" />&ensp;
   <img src="https://img.shields.io/badge/UI-%E4%B8%AD%E6%96%87-ff9f0a" height="20" alt="ui" />
 </p>
 
-> 📌 版本更新：见 [doc/ver/0.2.1.md](doc/ver/0.2.1.md)
+> 📌 版本更新：见 [doc/ver/0.2.2.md](doc/ver/0.2.2.md)
 
 > 🪟 DeepSeek Harness（DSH）Web 悬浮用量面板 —— 未央最爱的 macOS 毛玻璃 · 中文界面 · 官方余额 · Token 用量曲线。
 
