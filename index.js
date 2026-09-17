@@ -14,6 +14,7 @@
 // The browser half (client.js) never sees the API key.
 import { createBalanceStore } from "./lib/host/balance.js";
 import { createUsageState, usageFromSessionEvent } from "./lib/host/usage.js";
+import { createLedger } from "./lib/host/ledger.js";
 import { buildSnapshot } from "./lib/host/snapshot.js";
 import { resolveApiKey } from "./lib/host/key.js";
 import { ensureDataDir, fenceOk, writeRes, migrateLegacyState } from "./lib/host/util.js";
@@ -83,12 +84,63 @@ export function apply(ctx, rawConfig = {}) {
             resolver: () => resolveApiKey(ctx, config),
             timeoutMs: config.timeoutMs,
           });
+          const ledger = createLedger(dataDir);
+          await ledger.load();
 
           const send = (res, payload) => writeRes(res, 200, { ok: true, value: payload });
           const sendError = (res, code, message, status = 500) =>
             writeRes(res, status, { ok: false, error: { code, message } });
 
-          const snapshotNow = (now) => buildSnapshot({ balance, usage, config, now: now || Date.now() });
+          const snapshotNow = (now) => buildSnapshot({ balance, usage, config, ledger, now: now || Date.now() });
+
+          // ---- request trust fence ----
+          // 优先走 DSH 官方浏览器信任栅栏（connection.requestRejection，会话级），
+          // 服务缺失/调用异常时回退到手写同源栅栏（Host 白名单）。两层都必须通过。
+          const connection = (() => {
+            try {
+              return ctx.get ? ctx.get("connection") : undefined;
+            } catch {
+              return undefined;
+            }
+          })();
+          const requestTrusted = async (req) => {
+            if (!fenceOk(req)) return false;
+            if (connection && typeof connection.requestRejection === "function") {
+              try {
+                const rejected = await connection.requestRejection(req);
+                if (rejected && rejected !== false) return false;
+              } catch {
+                /* official fence unusable → keep the hand-rolled fence */
+              }
+            }
+            return true;
+          };
+
+          // ---- small JSON body reader (correction route) ----
+          const readJsonBody = (req, cap = 16 * 1024) =>
+            new Promise((resolve) => {
+              if (typeof req.on !== "function") return resolve(null);
+              const chunks = [];
+              let size = 0;
+              let done = false;
+              const finish = () => {
+                if (done) return;
+                done = true;
+                if (size > cap) return resolve(null);
+                try {
+                  resolve(chunks.length ? JSON.parse(Buffer.concat(chunks).toString("utf8")) : null);
+                } catch {
+                  resolve(null);
+                }
+              };
+              req.on("data", (c) => {
+                size += c.length;
+                chunks.push(c);
+              });
+              req.on("end", finish);
+              req.on("error", finish);
+              req.on("close", finish);
+            });
 
           // ---- routes (browser HUD) ----
           disposers.push(
@@ -96,7 +148,7 @@ export function apply(ctx, rawConfig = {}) {
               kind: "exact",
               path: "/dsh-usage/api/snapshot",
               handler: async (req, res) => {
-                if (!fenceOk(req)) return sendError(res, "forbidden", "forbidden", 403);
+                if (!(await requestTrusted(req))) return sendError(res, "forbidden", "forbidden", 403);
                 if (req.method !== "GET" && req.method !== "HEAD") {
                   return sendError(res, "method-not-allowed", "GET only", 405);
                 }
@@ -113,7 +165,7 @@ export function apply(ctx, rawConfig = {}) {
               kind: "exact",
               path: "/dsh-usage/api/refresh",
               handler: async (req, res) => {
-                if (!fenceOk(req)) return sendError(res, "forbidden", "forbidden", 403);
+                if (!(await requestTrusted(req))) return sendError(res, "forbidden", "forbidden", 403);
                 if (req.method !== "POST") return sendError(res, "method-not-allowed", "POST only", 405);
                 try {
                   await balance.poll();
@@ -125,17 +177,53 @@ export function apply(ctx, rawConfig = {}) {
               },
             }),
           );
+          disposers.push(
+            ctx.webServer.register({
+              kind: "exact",
+              path: "/dsh-usage/api/balance-correct",
+              handler: async (req, res) => {
+                if (!(await requestTrusted(req))) return sendError(res, "forbidden", "forbidden", 403);
+                if (req.method !== "POST") return sendError(res, "method-not-allowed", "POST only", 405);
+                try {
+                  const body = await readJsonBody(req);
+                  if (!body || typeof body !== "object") {
+                    return sendError(res, "bad-body", "JSON body required", 400);
+                  }
+                  await ledger.reconcile(body, Date.now());
+                  await ledger.save();
+                  send(res, snapshotNow());
+                } catch (err) {
+                  const status = Number(err && err.status) || 500;
+                  sendError(res, err && err.code ? err.code : "correction-error", String((err && err.message) || err), status);
+                }
+              },
+            }),
+          );
 
           // ---- self-rescheduling balance poller (timers are fiber-scoped) ----
           const runPoll = async () => {
             if (stopped) return;
             await balance.poll().catch(() => {});
+            // 每次成功观测都喂给余额账本（下降记消费、上升待核对）
+            try {
+              const snap = balance.snapshot();
+              if (snap.configured && snap.totalBalance != null && snap.updatedAt) {
+                ledger.observe({
+                  balance: snap.totalBalance,
+                  currency: snap.currency,
+                  at: Date.parse(snap.updatedAt) || Date.now(),
+                });
+                ledger.save().catch(() => {});
+              }
+            } catch {
+              /* 观测失败不影响轮询 */
+            }
             if (stopped) return;
             const delay = balance.nextDelayMs(config.pollIntervalMs);
             try {
               ctx.timeout(runPoll, delay);
             } catch {
-              // timer service unexpectedly unavailable 鈫?degrade to a plain timer
+              // timer service unexpectedly unavailable → degrade to a plain timer
               if (typeof setTimeout === "function") setTimeout(runPoll, delay);
             }
           };

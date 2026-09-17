@@ -39,6 +39,10 @@ window.__ModuleLoader__.load({
       "#dsh-usage-panel-host{position:fixed;inset:0;z-index:30;pointer-events:none}",
       ".up-root{position:fixed;z-index:2;pointer-events:auto;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,'PingFang SC','Microsoft YaHei',sans-serif}",
       ".up-root,.up-root *{box-sizing:border-box}",
+      // DSH 新版主题全局设置了 corner-shape:superellipse(1.5)（见 dsh-client-ui-theme 的
+      // corner-shape.css：*,:before,:after{corner-shape:var(--dsw-corner-shape)}），会把圆形
+      // 渲染成鹅卵石。这里在本插件子树内强制回正圆（含伪元素）。
+      ".up-root,.up-root *,.up-root::before,.up-root::after,.up-root *::before,.up-root *::after{corner-shape:round}",
       "body[data-ds-dark-theme]{--up-win:rgba(11,11,16,.25);--up-win2:rgba(20,20,28,.34);--up-brd:rgba(255,255,255,.14);--up-brds:rgba(255,255,255,.08);--up-hi:rgba(255,255,255,.16);--up-txt:rgba(255,255,255,.94);--up-dim:rgba(255,255,255,.58);--up-faint:rgba(255,255,255,.4);--up-card:rgba(255,255,255,.055);--up-cardh:rgba(255,255,255,.1);--up-grid:rgba(255,255,255,.09);--up-sh:0 16px 50px rgba(0,0,0,.42),0 2px 10px rgba(0,0,0,.3);--up-redglow:rgba(255,69,58,.32);--up-blur:10px}",
       "body:not([data-ds-dark-theme]){--up-win:rgba(255,255,255,.3);--up-win2:rgba(255,255,255,.42);--up-brd:rgba(0,0,0,.12);--up-brds:rgba(0,0,0,.06);--up-hi:rgba(255,255,255,.9);--up-txt:rgba(18,18,26,.92);--up-dim:rgba(18,18,26,.55);--up-faint:rgba(18,18,26,.38);--up-card:rgba(18,18,26,.045);--up-cardh:rgba(18,18,26,.09);--up-grid:rgba(18,18,26,.08);--up-sh:0 16px 60px rgba(30,30,60,.2),0 2px 10px rgba(30,30,60,.1);--up-redglow:rgba(255,69,58,.24);--up-blur:10px}",
       ".up-hoverable{transition:transform .16s ease,background .16s ease,box-shadow .16s ease}",
@@ -121,6 +125,9 @@ window.__ModuleLoader__.load({
       ".up-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 14px;border-top:1px solid var(--up-brds)}",
       ".up-foot a{color:var(--up-dim);font-size:10.5px;text-decoration:none;display:inline-flex;align-items:center;gap:4px;transition:color .15s ease}",
       ".up-foot a:hover{color:#4d6bfe}",
+      // 设置面板页脚链接：与分割线/其他元素左对齐，上下间距对称（14px 上 / 0 下，
+      // 叠加 .up-set-body 底部 14px 后与上方距分割线的距离一致）
+      ".up-set-foot{padding:14px 0 0;margin-top:2px}",
       // ---------- settings / toggles / theme ----------
       ".up-settings{width:300px;max-width:calc(100vw - 20px);border-radius:14px;overflow:hidden;background:var(--up-win);border:1px solid var(--up-brd);box-shadow:var(--up-sh);backdrop-filter:blur(var(--up-blur)) saturate(160%);-webkit-backdrop-filter:blur(var(--up-blur)) saturate(160%);display:flex;flex-direction:column;color:var(--up-txt);position:relative;animation:up-pop .2s cubic-bezier(.2,.9,.3,1.15);transform-origin:bottom right}",
       ".up-settings.closing{animation:up-out .18s ease forwards}",
@@ -142,6 +149,14 @@ window.__ModuleLoader__.load({
       ".up-seg button.on{background:var(--up-accent,#4d6bfe);color:#fff}",
       ".up-reset{width:100%;margin-top:2px;border:1px solid var(--up-brds);background:transparent;color:var(--up-dim);border-radius:9px;padding:7px;font-size:12px;cursor:pointer;font-family:inherit;transition:background .15s ease,color .15s ease}",
       ".up-reset:hover{background:var(--up-cardh);color:var(--up-txt)}",
+      ".up-warn{color:#ff9f0a}",
+      ".up-mini-btn{border:0;background:var(--up-card);color:var(--up-dim);border-radius:6px;padding:2px 8px;font-size:10px;cursor:pointer;font-family:inherit;transition:background .15s ease,color .15s ease}",
+      ".up-mini-btn:hover{background:var(--up-cardh);color:var(--up-txt)}",
+      ".up-corr{margin-top:8px;display:flex;flex-direction:column;gap:6px;padding:8px 10px;border-radius:10px;background:var(--up-card);border:1px solid var(--up-brds)}",
+      ".up-corr-t{font-size:10.5px;color:var(--up-dim)}",
+      ".up-corr-row{display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--up-dim)}",
+      ".up-corr-row input{flex:1;width:auto;min-width:0}",
+      ".up-corr-actions{display:flex;gap:6px;justify-content:flex-end}",
       // ---------- minimal orb / alarm / turn flash ----------
       ".up-orb{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--up-win);border:1px solid var(--up-brd);box-shadow:var(--up-sh);backdrop-filter:blur(var(--up-blur)) saturate(150%);-webkit-backdrop-filter:blur(var(--up-blur)) saturate(150%);cursor:pointer;user-select:none;touch-action:none;transition:background .18s ease,transform .18s ease,box-shadow .18s ease;color:var(--up-accent,#4d6bfe)}",
       ".up-orb:hover{background:var(--up-win2)}",
@@ -153,6 +168,8 @@ window.__ModuleLoader__.load({
       ".up-orb-dot{position:absolute;top:0;right:0;z-index:2;width:14px;height:14px;border-radius:50%;background:#ff453a;border:2px solid var(--up-win);transform:translate(-1px,1px);box-shadow:0 0 0 2px var(--up-redglow);animation:up-alarm 1.1s ease-in-out infinite}",
       "@keyframes up-dot-pulse{0%,100%{opacity:1}50%{opacity:.5}}",
       ".up-flash{position:absolute;right:0;bottom:calc(100% + 10px);white-space:nowrap;background:var(--up-win2);border:1px solid var(--up-brd);color:var(--up-txt);font-size:11px;font-variant-numeric:tabular-nums;padding:5px 10px;border-radius:999px;box-shadow:var(--up-sh);backdrop-filter:blur(var(--up-blur));-webkit-backdrop-filter:blur(var(--up-blur));animation:up-flash .25s ease}",
+      // 回合气泡方向自适应：胶囊贴左边缘时从左缘向右弹出（与胶囊翻转一致）
+      ".up-flash.left{left:0;right:auto}",
       "@keyframes up-flash{from{opacity:0;transform:translateY(4px)}}",
     ].join("");
 
@@ -200,31 +217,87 @@ window.__ModuleLoader__.load({
     }
 
     // -------------------------------------------------------------- fetch
-    async function apiCall(method, post) {
+    async function apiCall(method, post, body) {
       var res = await fetch("/dsh-usage/api/" + method, {
         method: post ? "POST" : "GET",
         headers: post ? { "content-type": "application/json" } : undefined,
+        body: post && body !== undefined ? JSON.stringify(body) : undefined,
         cache: "no-store",
       });
-      var body = null;
+      var parsed = null;
       try {
-        body = await res.json();
+        parsed = await res.json();
       } catch (e) {
-        body = null;
+        parsed = null;
       }
-      if (!body || body.ok !== true) {
-        var msg = (body && body.error && body.error.message) || ("HTTP " + res.status);
+      if (!parsed || parsed.ok !== true) {
+        var msg = (parsed && parsed.error && parsed.error.message) || ("HTTP " + res.status);
         var err = new Error(msg);
-        err.code = (body && body.error && body.error.code) || ("http-" + res.status);
+        err.code = (parsed && parsed.error && parsed.error.code) || ("http-" + res.status);
         throw err;
       }
-      return body.value;
+      return parsed.value;
     }
     async function loadSnapshot() {
       return apiCall("snapshot", false);
     }
     async function triggerRefresh() {
       return apiCall("refresh", true);
+    }
+    /** 余额校正（余额观测账本）：body = { day, revision, credits, otherDebits, confirmed } 或 { day, action:"reset", confirmed:true } */
+    async function correctBalance(body) {
+      return apiCall("balance-correct", true, body);
+    }
+
+    // ---------------------------------------------------- rolling number
+    // 余额数字滚动动画：rAF 700ms ease-out 三次方（whale-widget 同款节奏）。
+    function RollingNumber(props) {
+      var parseN = function (v) {
+        if (v === null || v === undefined) return NaN;
+        var n = typeof v === "string" ? parseFloat(v) : v;
+        return isFinite(n) ? n : NaN;
+      };
+      var initial = parseN(props.value);
+      var shownState = useState(isNaN(initial) ? null : initial);
+      var shown = shownState[0];
+      var setShown = shownState[1];
+      var fromRef = useRef(shown);
+      var rafRef = useRef(0);
+      useEffect(function () {
+        var to = parseN(props.value);
+        var from = fromRef.current;
+        if (isNaN(to)) {
+          fromRef.current = null;
+          return undefined;
+        }
+        if (from === null || isNaN(from)) {
+          fromRef.current = to;
+          setShown(to);
+          return undefined;
+        }
+        if (to === from) return undefined;
+        var start = 0;
+        if (rafRef.current) cancelAnimationFrame(rafRef.current);
+        var step = function (ts) {
+          if (!start) start = ts;
+          var p = Math.min(1, (ts - start) / 700);
+          var eased = 1 - Math.pow(1 - p, 3); // ease-out cubic
+          setShown(from + (to - from) * eased);
+          if (p < 1) {
+            rafRef.current = requestAnimationFrame(step);
+          } else {
+            fromRef.current = to;
+          }
+        };
+        rafRef.current = requestAnimationFrame(step);
+        return function () {
+          if (rafRef.current) cancelAnimationFrame(rafRef.current);
+          fromRef.current = to;
+        };
+      }, [props.value]);
+      var target = parseN(props.value);
+      var text = isNaN(target) ? "—" : shown === null ? fmtMoney(target, props.cur) : fmtMoney(shown, props.cur);
+      return h("span", props.spanProps || {}, text);
     }
 
     // ------------------------------------------------------------- storage
@@ -522,10 +595,10 @@ window.__ModuleLoader__.load({
         ),
         h(
           "div",
-          { className: "up-tile" },
+          { className: "up-tile", title: s && s.day && s.day.partialDay ? "今日为本地观测窗口统计（自插件观测起点起），可能小于平台全天" : undefined },
           h("div", { className: "up-tk" }, "今日"),
           h("div", { className: "up-tv" }, fmtTokens(dayTotal)),
-          h("div", { className: "up-ts" }, (s && s.day ? s.day.calls || 0 : 0) + " 次响应"),
+          h("div", { className: "up-ts" }, (s && s.day ? s.day.calls || 0 : 0) + " 次响应" + (s && s.day && s.day.observedFrom ? " · 自 " + fmtHour(s.day.observedFrom) : "")),
         ),
         h(
           "div",
@@ -541,17 +614,32 @@ window.__ModuleLoader__.load({
     function BalanceCard(props) {
       var s = props.snap;
       var b = s && s.balance;
+      var corrOpenState = useState(false);
+      var corrOpen = corrOpenState[0];
+      var setCorrOpen = corrOpenState[1];
+      var creditsState = useState("");
+      var credits = creditsState[0];
+      var setCredits = creditsState[1];
+      var otherDebitsState = useState("");
+      var otherDebits = otherDebitsState[0];
+      var setOtherDebits = otherDebitsState[1];
       if (!b) {
         return h("div", { className: "up-card" }, h("div", { className: "up-empty" }, "等待数据…"));
       }
       var tone = balanceSignal(b, props.prefs);
-      // Only official /user/balance fields are shown; no locally estimated spend.
+      // 官方 /user/balance 字段 + 余额观测账本（账户口径，非本地估算）
       var sub;
       if (b.configured === false || (b.error && b.error.code === "no-key")) {
         sub = h(
           "div",
           { className: "up-balsub err" },
           "未配置 DeepSeek API Key。请在 ~/.dsh/.credentials.yaml 中加入 “DEEPSEEK_API_KEY”（或设置环境变量 DSH_USAGE_HUD_API_KEY）后刷新。",
+        );
+      } else if (b.stale && b.error) {
+        sub = h(
+          "div",
+          { className: "up-balsub up-warn" },
+          "网络抖动 · 沿用最近余额 · " + (b.error.message || b.error.code),
         );
       } else if (b.error) {
         sub = h(
@@ -567,6 +655,16 @@ window.__ModuleLoader__.load({
         );
       }
       var cur = b.currency || "CNY";
+      var t = b.todayObserved;
+      var openCorr = function () {
+        setCredits(t && t.credits != null ? String(t.credits) : "");
+        setOtherDebits(t && t.otherDebits != null ? String(t.otherDebits) : "");
+        setCorrOpen(true);
+      };
+      var doCorr = function (payload) {
+        setCorrOpen(false);
+        if (typeof props.onCorrect === "function") props.onCorrect(payload);
+      };
       return h(
         "div",
         { className: "up-card" },
@@ -579,7 +677,7 @@ window.__ModuleLoader__.load({
         h(
           "div",
           { className: "up-balmain" },
-          h("span", { className: "up-balamt up-mono" }, fmtMoney(b.totalBalance, cur)),
+          h(RollingNumber, { value: b.totalBalance, cur: cur, spanProps: { className: "up-balamt up-mono" } }),
           h("span", { className: "up-balcur" }, cur),
           h("span", { className: "up-dot " + tone.dot, style: { marginLeft: "auto", alignSelf: "center" } }),
         ),
@@ -589,6 +687,46 @@ window.__ModuleLoader__.load({
               "div",
               { className: "up-legend" },
               h("span", { title: "官方 /user/balance 返回的充值余额" }, "充值余额 " + fmtMoney(b.toppedUpBalance, cur)),
+            )
+          : null,
+        t
+          ? h(
+              "div",
+              { className: "up-legend" },
+              h(
+                "span",
+                { className: t.needsReview ? "up-warn" : undefined, title: t.label },
+                "今日已观测消费 " + fmtMoney(t.amount, t.currency) +
+                  (t.source === "balance-corrected" ? " · 已校正" : t.needsReview ? " · 待核对" : ""),
+              ),
+              h("button", { className: "up-mini-btn", title: "按实际到账金额校正今日消费", onClick: openCorr }, "校正"),
+            )
+          : null,
+        corrOpen && t
+          ? h(
+              "div",
+              { className: "up-corr" },
+              h("div", { className: "up-corr-t" },
+                t.needsReview ? "检测到余额增加（充值/赠金），请填入本统计区间的实际到账金额与非调用扣减后校正。" : "按实际到账金额与非调用扣减校正今日消费。"),
+              h(
+                "div",
+                { className: "up-corr-row" },
+                h("span", null, "到账"),
+                h("input", { className: "up-num", type: "text", inputMode: "decimal", placeholder: "0", value: credits, onChange: function (e) { setCredits(e.target.value); } }),
+              ),
+              h(
+                "div",
+                { className: "up-corr-row" },
+                h("span", null, "非调用扣减"),
+                h("input", { className: "up-num", type: "text", inputMode: "decimal", placeholder: "0", value: otherDebits, onChange: function (e) { setOtherDebits(e.target.value); } }),
+              ),
+              h(
+                "div",
+                { className: "up-corr-actions" },
+                h("button", { className: "up-mini-btn", onClick: function () { setCorrOpen(false); } }, "取消"),
+                h("button", { className: "up-mini-btn", onClick: function () { doCorr({ day: t.day, revision: t.revision, action: "reset", confirmed: true }); } }, "重置"),
+                h("button", { className: "up-mini-btn", onClick: function () { doCorr({ day: t.day, revision: t.revision, credits: credits, otherDebits: otherDebits, confirmed: true }); } }, "保存校正"),
+              ),
             )
           : null,
       );
@@ -799,7 +937,7 @@ window.__ModuleLoader__.load({
           "div",
           { className: "up-body" },
           h(StatTiles, { snap: s, prefs: props.prefs }),
-          h(BalanceCard, { snap: s, prefs: props.prefs }),
+          h(BalanceCard, { snap: s, prefs: props.prefs, onCorrect: props.onCorrect }),
           h("div", { className: "up-card" },
             h("div", { className: "up-card-h" }, h("span", { className: "up-card-t" }, "Tokens · 近 24 小时")),
             s && s.history && s.history.length > 0
@@ -929,6 +1067,13 @@ window.__ModuleLoader__.load({
               })),
           }),
           h("button", { className: "up-reset", onClick: props.onReset }, "恢复默认设置"),
+          h("div", { className: "up-foot up-set-foot" },
+            h("a", {
+              href: "https://github.com/WeiyangPro/dsh-deepseek-usage-panel",
+              target: "_blank",
+              rel: "noreferrer",
+              title: "项目官方仓库",
+            }, "GitHub · 官方仓库 ↗")),
         ),
       );
     }
@@ -1378,6 +1523,14 @@ window.__ModuleLoader__.load({
           .catch(function (e) { errState[1](e && e.message ? e.message : String(e)); })
           .then(function () { refreshState[1](false); });
       }
+      function correctNow(payload) {
+        correctBalance(payload)
+          .then(function (value) {
+            snapState[1](value);
+            errState[1](null);
+          })
+          .catch(function (e) { errState[1](e && e.message ? e.message : String(e)); });
+      }
 
       // ---------- drag ----------
       var applyDrag = function (a, b, mode) {
@@ -1461,7 +1614,12 @@ window.__ModuleLoader__.load({
       var sig = balanceSignal(snap && snap.balance, prefs);
       var orbRed = sig.orbRed;
       var dotCls = sig.dot;
-      var flashNode = flash && prefs.turnFlash ? h("div", { className: "up-flash", key: String(flash.at) }, flash.text) : null;
+      var flashNode = flash && prefs.turnFlash
+        ? h("div", {
+            className: "up-flash" + ((window.innerWidth - pos.r) < 240 ? " left" : ""),
+            key: String(flash.at),
+          }, flash.text)
+        : null;
 
       if (view === 1) {
         var rootEl = h(
@@ -1478,6 +1636,7 @@ window.__ModuleLoader__.load({
             onClose: closeView,
             onZoom: closeView,
             onRefresh: refreshNow,
+            onCorrect: correctNow,
             onTitleDown: function (e) { dragStart(e, "win"); },
             onTitleMove: function (e) { dragMove(e, "win"); },
             onTitleUp: function (e) { dragEnd(e, "win"); },
