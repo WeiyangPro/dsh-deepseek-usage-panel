@@ -7,9 +7,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/WeiyangPro/dsh-usage-panel"
+    "url": "git+https://github.com/WeiyangPro/dsh-deepseek-usage-panel.git"
   },
-  "homepage": "https://github.com/WeiyangPro/dsh-usage-panel",
+  "homepage": "https://github.com/WeiyangPro/dsh-deepseek-usage-panel",
   "keywords": [
     "deepseek",
     "harness",
@@ -45,7 +45,7 @@
     "id": "dsh-deepseek-usage-panel",
     "name": "用量面板",
     "version": "0.2.3",
-    "repo": "WeiyangPro/dsh-usage-panel",
+    "repo": "WeiyangPro/dsh-deepseek-usage-panel",
     "permissions": "读取配置的 DeepSeek API Key 轮询 GET /user/balance；监听 session/event 用量；注册 /dsh-usage/api HTTP 路由；在数据目录保存滚动用量历史",
     "bundle": {
       "patch": "./cordis.patch.yml"
